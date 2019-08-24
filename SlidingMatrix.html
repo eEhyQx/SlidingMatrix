@@ -7,12 +7,14 @@
             display: block;
             margin: 0 auto;
             border-radius: 10px;
-            background-color: #00FFFF;
+            background-color: #0E8F81;
         }
     </style>
 </head>
-<body bgcolor="#f67c5f">
-    <center id="steps" style="font:bold 25px Arial,Microsoft Yahei"></center><br/>
+<body bgcolor="#034D45">
+    <center id="notification" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF"></center><br/>
+    <center id="title" style="font:bold 70px Arial,Microsoft Yahei;color:#FFFFFF"></center><br/>
+    <center id="steps" style="font:bold 25px Arial,Microsoft Yahei;color:#FFFFFF"></center><br/>
     <canvas id="canvas" width="500" height="500"></canvas>
     
     <script>
@@ -21,15 +23,15 @@
         var map_degree=4;
         var map;
         var offsetx = {1:53,2:34,3:28,4:25};
-        var keycom = {'87':[-1,0],'83':[1,0],'65':[0,-1],'68':[0,1],'74':[0,0,0],'75':[0,0,1],'76':[0,0,-1]}; 
+        var keycom = {'87':[-1,0],'83':[1,0],'65':[0,-1],'68':[0,1],'74':[0,0,0],'75':[0,0,1],'76':"reverse"}; 
         //up,down,left,right,j,k,l
         //add row and colomn move
         var row_move=0;
         var col_move=0;
         var reverse=false;
         
-        var default_color="#ccc0b3";
-        var core_color="#008000";
+        var default_color="#8AD9D0";
+        var core_color="#FFFFFF";
         var default_num_size={1:60,2:60,3:50,4:40};
         var stepcount=0;
         var core_position=[0,0];
@@ -70,7 +72,7 @@
                     }
                     ctx.fillRect(j*120+20,i*120+20,100,100);
                     ctx.font = "bold "+default_num_size[String(num).length]+"px Arial,Microsoft Yahei";
-                    ctx.fillStyle = "#776e15";
+                    ctx.fillStyle = "#266059";
                     ctx.fillText(String(num),j*120+offsetx[String(num).length],i*120+70+default_num_size[String(num).length]/3);
                     console.log('step_documents: '+String(step_documents));
                 });
@@ -84,27 +86,51 @@
                 }
         }
      
-        function move(x,direction,reverse=false){
+        function move(x,direction){
             var step=[x,direction];
-            if(step[0]==step_documents[step_documents.length-1][0] && step[1]==step_documents[step_documents.length-1][1]){
-                step_documents[step_documents.length-1][2]=(step_documents[step_documents.length-1][2]+1)%map_degree;
+            if(reverse){
+                if(step[0]==step_documents[step_documents.length-1][0] && step[1]==step_documents[step_documents.length-1][1]){
+                    step_documents[step_documents.length-1][2]=(step_documents[step_documents.length-1][2]-1)%map_degree;
+                }
+                else{
+                    step_documents[step_documents.length]=[x,direction,map_degree-1];
+                }
+                if(direction){
+                    var tmp=map[0][x];
+                    for(i=0;i<map_degree-1;i++){
+                        map[i][x]=map[i+1][x];
+                    }
+                    map[map_degree-1][x]=tmp;
+                }
+                else{
+                    var tmp=map[x][0];
+                    for(i=0;i<map_degree-1;i++){
+                        map[x][i]=map[x][i+1];
+                    }
+                    map[x][map_degree-1]=tmp;
+                }
             }
             else{
-                step_documents[step_documents.length]=[x,direction,1];
-            }
-            if(direction){
-                var tmp=map[map_degree-1][x];
-                for(i=0;i<map_degree-1;i++){
-                    map[map_degree-i-1][x]=map[map_degree-i-2][x];
+                if(step[0]==step_documents[step_documents.length-1][0] && step[1]==step_documents[step_documents.length-1][1]){
+                    step_documents[step_documents.length-1][2]=(step_documents[step_documents.length-1][2]+1)%map_degree;
                 }
-                map[0][x]=tmp;
-            }
-            else{
-                var tmp=map[x][map_degree-1];
-                for(i=0;i<map_degree-1;i++){
-                    map[x][map_degree-i-1]=map[x][map_degree-i-2];
+                else{
+                    step_documents[step_documents.length]=[x,direction,1];
                 }
-                map[x][0]=tmp;
+                if(direction){
+                    var tmp=map[map_degree-1][x];
+                    for(i=0;i<map_degree-1;i++){
+                        map[map_degree-i-1][x]=map[map_degree-i-2][x];
+                    }
+                    map[0][x]=tmp;
+                }
+                else{
+                    var tmp=map[x][map_degree-1];
+                    for(i=0;i<map_degree-1;i++){
+                        map[x][map_degree-i-1]=map[x][map_degree-i-2];
+                    }
+                    map[x][0]=tmp;
+                }
             }
             
         }
@@ -119,6 +145,13 @@
                     core_position[0]=(core_position[0]+map_degree)%map_degree;
                     core_position[1]+=keycom[input][1];
                     core_position[1]=(core_position[1]+map_degree)%map_degree;
+                }
+                else if(keycom[input]=="reverse"){
+                   tmp=core_color;
+                   core_color=default_color;
+                   default_color=tmp;
+                   reverse= !reverse;
+                   return null;
                 }
                 else{
                     command=keycom[input][2];
@@ -177,6 +210,7 @@
         canvas.ontouchend=function(event){
         }
 
+        document.getElementById("title").innerText="Sliding Matrix";
         map_degree=Number(get_map_degree());
         alert ("map_degree="+String(map_degree));  
         canvas.width=20+120*map_degree;
