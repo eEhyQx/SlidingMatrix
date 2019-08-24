@@ -6,7 +6,7 @@
         canvas{
             display: block;
             margin: 0 auto;
-            border-radius: 50px;
+            border-radius: 10px;
             background-color: #00FFFF;
         }
     </style>
@@ -20,30 +20,28 @@
         var ctx = canvas.getContext('2d');
         var map_degree=4;
         var map;
-        var num_color = {0:"#ccc0b3",2:"#eee4da",4:"#ede0c8",8:"#f2b179",16:"#f59563",32:"#f67c5f",64:"#ec6544",128:"#e44d29",256:"#edcf72",512:"#c8a145",1024:"#a8832b",2048:"#86aa9c"};
-        var num_size = {0:"60",2:"60",4:"60",8:"60",16:"60",32:"60",64:"60",128:"50",256:"50",512:"50",1024:"40",2048:"40"};
-        var offsetx = {0:53,2:53,4:53,8:53,16:34,32:35,64:35,128:28,256:28,512:28,1024:24,2048:25};
-        var keycom = {'38':[0,-1],'40':[0,1],'37':[-1,0],'39':[1,0]};
-        var space=16,score=0; 
-
-        //add two vars below to replace the map of size and color
+        var offsetx = {1:53,2:34,3:28,4:25};
+        var keycom = {'87':[-1,0],'83':[1,0],'65':[0,-1],'68':[0,1],'74':[0,0,0],'75':[0,0,1],'76':[0,0,-1]}; 
+        //up,down,left,right,j,k,l
+        //add row and colomn move
+        var row_move=0;
+        var col_move=0;
+        var reverse=false;
+        
         var default_color="#ccc0b3";
-        var default_num_size="60";
-
-        //add var stepcounter
+        var core_color="#008000";
+        var default_num_size={1:60,2:60,3:50,4:40};
         var stepcount=0;
+        var core_position=[0,0];
+
+        var step_documents=new Array();
+        step_documents[0]=['num','row_or_col','times'];
 
         //add function get_map_degree
         function get_map_degree(){
             map_degree=prompt("Please choose the degree of the matrix:(positive integer)","4"); 
             return map_degree;           
         }
-        map_degree=Number(get_map_degree());
-        alert ("map_degree="+String(map_degree));  
-        canvas.width=125*map_degree;
-        canvas.height=125*map_degree;
-        map=createmap(map_degree);
-        draw();
         
         //the controll logic:
         //There are 8 different input: w,a,s,d,up,left,down,right
@@ -55,26 +53,29 @@
             for(var i=0;i<degree;i++){
                 map[i]=new Array();
                 for(var j=0;j<degree;j++){
-                    map[i][j]=0;
+                    map[i][j]=1+i*degree+j;
                 }
             }
             return map;
         }
+
         function draw(){
             formap(function(i,j){
                     var num = map[i][j];
-                    ctx.fillStyle = default_color;
-                    ctx.fillRect(j*120+20,i*120+20,100,100);
-                    if(num!=0){
-                        ctx.font = "bold "+default_num_size+"px Arial,Microsoft Yahei";
-                        ctx.fillStyle = (num<=map_degree)?"#776e65":"white";
-                        ctx.fillText(String(map[i][j]),j*120+offsetx[num],i*120+70+num_size[num]/3);
+                    if (i==core_position[0] && j==core_position[1]){
+                        ctx.fillStyle=core_color;
                     }
+                    else{
+                        ctx.fillStyle=default_color;
+                    }
+                    ctx.fillRect(j*120+20,i*120+20,100,100);
+                    ctx.font = "bold "+default_num_size[String(num).length]+"px Arial,Microsoft Yahei";
+                    ctx.fillStyle = "#776e15";
+                    ctx.fillText(String(num),j*120+offsetx[String(num).length],i*120+70+default_num_size[String(num).length]/3);
                     console.log("draw: "+i+","+j);
                 });
-            document.getElementById("steps").innerText="steps: "+String(stepcount+1);
+            document.getElementById("steps").innerText="steps: "+String(stepcount);
         }
-
 
         function formap(func){
             for(var i=0;i<map_degree;i++)
@@ -83,18 +84,90 @@
                 }
         }
      
-
-        function move(dir){
+        function move(x,direction,reverse=false){
+            if(direction){
+                var tmp=map[map_degree-1][x];
+                for(i=0;i<map_degree-1;i++){
+                    map[map_degree-i-1][x]=map[map_degree-i-2][x];
+                }
+                map[0][x]=tmp;
+            }
+            else{
+                var tmp=map[x][map_degree-1];
+                for(i=0;i<map_degree-1;i++){
+                    map[x][map_degree-i-1]=map[x][map_degree-i-2];
+                }
+                map[x][0]=tmp;
+            }
             
-            if(space==0)alert("game over");
+        }
+        //j(true) means row-move and k(false) means colomn-move
+        
+                       
+        /* ;*/
+        function core_location(input){
+            core_position[0]+=keycom[input][0];
+            core_position[0]=(core_position[0]+map_degree)%map_degree;
+            core_position[1]+=keycom[input][1];
+            core_position[1]=(core_position[1]+map_degree)%map_degree;
+            if (keycom[input].length==3){
+                command=keycom[input][2];
+                return command;
+            }
+            else return null;
+        } 
+        
+        //produce();produce();
+        document.onkeydown=function(e){
+            dir =(e?e:event).keyCode;
+            console.log(dir);
+            cmd=core_location(dir);
+            if (cmd!=null){
+
+                move(core_position[cmd],cmd,false);
+            }
             draw();
+        };
+
+        function is_neat(){
+            ans=true;
+            for (var i=0;i<map_degree;i++){
+                for (var j=0;j<map_degree;j++){
+                    if ((i*map_degree+j)!=map[i][j]){
+                        ans=false;
+                        break;
+                    }   
+                }
+                if (ans==false) break;
+            };
+            return ans;
+        }
+        /*def judge(*state):
+    l=len(state)
+    n=l**0.5
+    s=1
+    if n!=int(n):
+        print "not a square!"
+        return
+    if set(state)!=set(range(0,l)):
+        print "data error!"
+        return
+    if n%2==0:
+        print True
+        return
+    for i in range(0,l):
+        for j in range(0,l):
+            if i>j:
+                s*=(state[i]-state[j])
+    print s>0
+*/
+        //try to prove the existence of solution
+        function has_solution(){
+            ans=true;
+            return ans;            
         }
 
-        produce();produce();
-
-        document.onkeydown=function(e){
-            
-        };
+        
         var sx,sy,dx,dy,ex,ey;
         canvas.ontouchstart=function(event){
             
@@ -104,7 +177,12 @@
         canvas.ontouchend=function(event){
         }
 
-        
+        map_degree=Number(get_map_degree());
+        alert ("map_degree="+String(map_degree));  
+        canvas.width=20+120*map_degree;
+        canvas.height=20+120*map_degree;
+        map=createmap(map_degree);
+        draw();        
 
     </script>
 </body>
