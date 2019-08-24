@@ -72,9 +72,9 @@
                     ctx.font = "bold "+default_num_size[String(num).length]+"px Arial,Microsoft Yahei";
                     ctx.fillStyle = "#776e15";
                     ctx.fillText(String(num),j*120+offsetx[String(num).length],i*120+70+default_num_size[String(num).length]/3);
-                    console.log("draw: "+i+","+j);
+                    console.log('step_documents: '+String(step_documents));
                 });
-            document.getElementById("steps").innerText="steps: "+String(stepcount);
+            document.getElementById("steps").innerText="steps: "+String(step_documents.length-1);
         }
 
         function formap(func){
@@ -85,6 +85,13 @@
         }
      
         function move(x,direction,reverse=false){
+            var step=[x,direction];
+            if(step[0]==step_documents[step_documents.length-1][0] && step[1]==step_documents[step_documents.length-1][1]){
+                step_documents[step_documents.length-1][2]=(step_documents[step_documents.length-1][2]+1)%map_degree;
+            }
+            else{
+                step_documents[step_documents.length]=[x,direction,1];
+            }
             if(direction){
                 var tmp=map[map_degree-1][x];
                 for(i=0;i<map_degree-1;i++){
@@ -106,28 +113,21 @@
                        
         /* ;*/
         function core_location(input){
-            core_position[0]+=keycom[input][0];
-            core_position[0]=(core_position[0]+map_degree)%map_degree;
-            core_position[1]+=keycom[input][1];
-            core_position[1]=(core_position[1]+map_degree)%map_degree;
-            if (keycom[input].length==3){
-                command=keycom[input][2];
-                return command;
+            if(input in keycom){
+                if(keycom[input].length==2){
+                    core_position[0]+=keycom[input][0];
+                    core_position[0]=(core_position[0]+map_degree)%map_degree;
+                    core_position[1]+=keycom[input][1];
+                    core_position[1]=(core_position[1]+map_degree)%map_degree;
+                }
+                else{
+                    command=keycom[input][2];
+                    return command;
+                }
             }
             else return null;
         } 
         
-        //produce();produce();
-        document.onkeydown=function(e){
-            dir =(e?e:event).keyCode;
-            console.log(dir);
-            cmd=core_location(dir);
-            if (cmd!=null){
-
-                move(core_position[cmd],cmd,false);
-            }
-            draw();
-        };
 
         function is_neat(){
             ans=true;
@@ -182,7 +182,18 @@
         canvas.width=20+120*map_degree;
         canvas.height=20+120*map_degree;
         map=createmap(map_degree);
-        draw();        
+        draw(); 
+
+        document.onkeydown=function(e){
+            dir =(e?e:event).keyCode;
+            console.log(dir);
+            cmd=core_location(dir);
+            if (cmd!=null){
+
+                move(core_position[cmd],cmd,false);
+            }
+            draw();
+        };       
 
     </script>
 </body>
