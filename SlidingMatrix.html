@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sliding Matrix</title>
     <style>
         canvas{
@@ -9,16 +12,22 @@
             border-radius: 10px;
             background-color: #0E8F81;
         }
+        button {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+        }
     </style>
-    <link rel="stylesheet" type="text/css" media="screen" href="./mui.css" />
-    <script src="./angular.js"></script>
-    <script src="./mui-angular.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/mui.css" />
+    <script src="./js/mui.js"></script>
 </head>
-<body bgcolor="#034D45">
+<body style="background-color: #034D45">
     <center id="notification" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
     <center id="title" style="font:bold 70px Arial,Microsoft Yahei;color:#FFFFFF">Sliding Matrix</center><br/>
-    <center id="steps" style="font:bold 25px Arial,Microsoft Yahei;color:#FFFFFF">steps:</center><br/>
+    <center id="steps" style="font:regular 25px Arial,Microsoft Yahei;color:#FFFFFF">steps:</center><br/>
     <canvas id="canvas" width="0" height="0"></canvas>
+    <center ></center><br/>
+    <center><button id="more" class="mui-btn mui-btn--fab" style="background-color:#0E8F81;font:bold 20px Microsoft Yahei,Arial;color:#034D45">···</button></center>
     <script>
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext('2d');
@@ -73,8 +82,8 @@
                     ctx.fillText(String(num),j*120+offsetx[String(num).length],i*120+70+default_num_size[String(num).length]/3);
                     console.log('step_documents: '+String(step_documents));
                 });
-            document.getElementById("steps").style="font:bold "+String(parseInt(25*map_degree/4))+"px Arial,Microsoft Yahei;color:#FFFFFF"
-            document.getElementById("steps").innerText="steps: "+String(step_documents.length-1);
+            document.getElementById("steps").style="font: "+String(parseInt(25*map_degree/4))+"px Arial,Microsoft Yahei;color:#FFFFFF"
+            document.getElementById("steps").innerText="Steps: "+String(step_documents.length-1);
         }
 
         function formap(func){
@@ -241,7 +250,8 @@
         }
 
         map_degree=Number(get_map_degree());
-        document.getElementById("title").style="font:bold "+String(parseInt(75*map_degree/4))+"px Arial,Microsoft Yahei;color:#FFFFFF"
+        document.getElementById("title").style="font:bold "+String(parseInt(75*map_degree/4))+"px Arial,Microsoft Yahei;color:#FFFFFF";
+        document.getElementById("more").style="background-color:#0E8F81;height:"+String(parseInt(72*map_degree/4))+"px;width:"+String(parseInt(72*map_degree/4))+"px;font:bold "+String(parseInt(20*map_degree/4))+"px Microsoft Yahei,Arial;color:#034D45";
         alert ("map_degree="+String(map_degree));  
         canvas.width=20+120*map_degree;
         canvas.height=20+120*map_degree;
