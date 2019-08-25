@@ -23,13 +23,13 @@
 <body style="background-color: #034D45">
     <center id="notification_1" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
     <center id="notification_2" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
-    <center id="notification_3" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
     <center id="title" style="font:bold 70px Arial,Microsoft Yahei;color:#FFFFFF">Sliding Matrix</center><br/>
     <center id="steps" style="font:regular 25px Arial,Microsoft Yahei;color:#FFFFFF">steps:</center><br/>
     <canvas id="canvas" width="10" height="10"></canvas>
+    <center id="notification_3" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
     <center id="notification_4" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
-    <center id="notification_5" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
     <center><button id="more" class="mui-btn mui-btn--fab" style="background-color:#0E8F81;font:bold 20px Microsoft Yahei,Arial;color:#034D45">···</button></center>
+    <center id="notification_5" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
     <script>
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext('2d');
@@ -50,11 +50,19 @@
         var core_position=[0,0];
         var step_documents=new Array();
         step_documents[0]=['num','row_or_col','times'];
+        var screen_Width=window.screen.width;
+        var screen_Height=window.screen.height;
 
         //add function get_map_degree
         function get_map_degree(){
             map_degree=prompt("Please choose the degree of the matrix:(positive integer)","4"); 
             return map_degree;           
+        }
+
+        function px_scale(px_num){
+            var a=screen_Height<screen_Width?[screen_Height,1080]:[screen_Width,1600];
+            console.log(String(a));
+            return parseInt(px_num/a[0]*a[1]/map_degree*4);
         }
         
         
@@ -78,13 +86,13 @@
                     else{
                         ctx.fillStyle=default_color;
                     }
-                    ctx.fillRect(j*120+20,i*120+20,100,100);
-                    ctx.font = "bold "+default_num_size[String(num).length]+"px Arial,Microsoft Yahei";
+                    ctx.fillRect(j*px_scale(120)+px_scale(20),i*px_scale(120)+px_scale(20),px_scale(100),px_scale(100));
+                    ctx.font = "bold "+px_scale(default_num_size[String(num).length])+"px Arial,Microsoft Yahei";
                     ctx.fillStyle = "#266059";
-                    ctx.fillText(String(num),j*120+offsetx[String(num).length],i*120+70+default_num_size[String(num).length]/3);
+                    ctx.fillText(String(num),j*px_scale(120)+px_scale(offsetx[String(num).length]),i*px_scale(120)+px_scale(70)+px_scale(default_num_size[String(num).length]/3));
                     console.log('step_documents: '+String(step_documents));
                 });
-            document.getElementById("steps").style="font: "+String(parseInt(25*map_degree/4))+"px Arial,Microsoft Yahei;color:#FFFFFF"
+            document.getElementById("steps").style="font: 25px Arial,Microsoft Yahei;color:#FFFFFF"
             document.getElementById("steps").innerText="Steps: "+String(step_documents.length-1);
         }
 
@@ -241,11 +249,12 @@
         }
 
         map_degree=Number(get_map_degree());
-        document.getElementById("title").style="font:bold "+String(parseInt(75*map_degree/4))+"px Arial,Microsoft Yahei;color:#FFFFFF";
-        document.getElementById("more").style="background-color:#0E8F81;height:"+String(parseInt(72*map_degree/4))+"px;width:"+String(parseInt(72*map_degree/4))+"px;font:bold "+String(parseInt(20*map_degree/4))+"px Microsoft Yahei,Arial;color:#034D45";
+        document.getElementById("title").style="font:bold 75px Arial,Microsoft Yahei;color:#FFFFFF";
+        document.getElementById("more").style="background-color:#0E8F81;height:72px;width:72px;font:bold 20px Microsoft Yahei,Arial;color:#034D45";
         alert ("map_degree="+String(map_degree));  
-        canvas.width=20+120*map_degree;
-        canvas.height=20+120*map_degree;
+        canvas.width=px_scale(20)+px_scale(120)*map_degree;
+        canvas.height=px_scale(20)+px_scale(120)*map_degree;
+        canvas.style="display: block;margin: 0 auto;border-radius: "+px_scale(10)+"px;background-color: #0E8F81;"
         map=createmap(map_degree);
         draw(); 
 
