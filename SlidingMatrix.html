@@ -20,16 +20,16 @@
     <link rel="stylesheet" type="text/css" media="screen" href="./css/mui.css" />
     <script src="./js/mui.js"></script>
 </head>
-<body style="background-color: #034D45">
-    <center id="notification_1" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
-    <center id="notification_2" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
-    <center id="title" style="font:bold 70px Arial,Microsoft Yahei;color:#FFFFFF">Sliding Matrix</center><br/>
-    <center id="steps" style="font:regular 25px Arial,Microsoft Yahei;color:#FFFFFF">steps:</center><br/>
-    <canvas id="canvas" width="10" height="10"></canvas>
-    <center id="notification_3" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
-    <center id="notification_4" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
-    <center><button id="more" class="mui-btn mui-btn--fab" style="background-color:#0E8F81;font:bold 20px Microsoft Yahei,Arial;color:#034D45">···</button></center>
-    <center id="notification_5" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
+<body style="background-color: #034D45;">
+        <center id="notification_1" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
+        <center id="notification_2" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
+        <center id="title" style="font:bold 70px Arial,Microsoft Yahei;color:#FFFFFF">Sliding Matrix</center><br/>
+        <center id="steps" style="font:regular 25px Arial,Microsoft Yahei;color:#FFFFFF">steps:</center><br/>
+        <canvas id="canvas" width="10" height="10"></canvas>
+        <center id="notification_3" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
+        <center id="notification_4" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
+        <center><button id="more" class="mui-btn mui-btn--fab" style="background-color:#0E8F81;font:bold 20px Microsoft Yahei,Arial;color:#034D45">···</button></center>
+        <center id="notification_5" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
     <script>
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext('2d');
@@ -60,9 +60,8 @@
         }
 
         function px_scale(px_num){
-            var a=screen_Height<screen_Width?[screen_Height,1080]:[screen_Width,1600];
-            console.log(String(a));
-            return parseInt(px_num/a[0]*a[1]/map_degree*4);
+            var a=screen_Height<screen_Width?[screen_Height,1024]:[screen_Width,320];
+            return parseInt(px_num/map_degree*4);
         }
         
         
@@ -249,9 +248,8 @@
         }
 
         map_degree=Number(get_map_degree());
-        document.getElementById("title").style="font:bold 75px Arial,Microsoft Yahei;color:#FFFFFF";
         document.getElementById("more").style="background-color:#0E8F81;height:72px;width:72px;font:bold 20px Microsoft Yahei,Arial;color:#034D45";
-        alert ("map_degree="+String(map_degree));  
+        alert ("map_degree="+String(map_degree));
         canvas.width=px_scale(20)+px_scale(120)*map_degree;
         canvas.height=px_scale(20)+px_scale(120)*map_degree;
         canvas.style="display: block;margin: 0 auto;border-radius: "+px_scale(10)+"px;background-color: #0E8F81;"
