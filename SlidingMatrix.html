@@ -151,6 +151,10 @@
                    return null;
                 }
                 else if(keycom[input]=="go_back"){
+                   tmp=core_color;
+                   core_color=default_color;
+                   default_color=tmp;
+                   reverse=!reverse;
                    tmp=step_documents[step_documents.length-1];
                    var i=0;
                    while(i<tmp[2]){
@@ -160,6 +164,7 @@
                    if(step_documents.length>1){
                        step_documents.pop();
                    }
+                   setTimeout("tmp=core_color;core_color=default_color;default_color=tmp;reverse=!reverse;draw();","100");
                    return null;
                 }
                 else{
