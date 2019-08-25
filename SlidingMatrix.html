@@ -23,7 +23,7 @@
 <body style="background-color: #034D45;">
         <center id="notification_1" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
         <center id="notification_2" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
-        <center id="title" style="font:bold 70px Arial,Microsoft Yahei;color:#FFFFFF">Sliding Matrix</center><br/>
+        <center id="title" style="font:bold 70px Arial,Microsoft Yahei;color:#FFFFFF;">Sliding Matrix</center><br/>
         <center id="steps" style="font:regular 25px Arial,Microsoft Yahei;color:#FFFFFF">steps:</center><br/>
         <canvas id="canvas" width="10" height="10"></canvas>
         <center id="notification_3" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
@@ -60,8 +60,18 @@
         }
 
         function px_scale(px_num){
-            var a=screen_Height<screen_Width?[screen_Height,1024]:[screen_Width,320];
-            return parseInt(px_num/map_degree*4);
+            if(screen_Height>500 && screen_Width>500 && screen_Height>=screen_Width){
+                return parseInt(px_num/map_degree/800*screen_Width*4);
+            }
+            if(screen_Height>500 && screen_Width>500 && screen_Width>screen_Height){
+                return parseInt(px_num/map_degree/1024*screen_Height*4);
+            }
+            if(screen_Height<=500 || screen_Width<=500 && screen_Width>=screen_Height){
+                return parseInt(px_num/map_degree/1024*screen_Height*4);
+            }
+            if(screen_Height<=500 || screen_Width<=500 && screen_Height>screen_Width){
+                return parseInt(px_num/map_degree/300*screen_Width*4);
+            }
         }
         
         
@@ -91,7 +101,7 @@
                     ctx.fillText(String(num),j*px_scale(120)+px_scale(offsetx[String(num).length]),i*px_scale(120)+px_scale(70)+px_scale(default_num_size[String(num).length]/3));
                     console.log('step_documents: '+String(step_documents));
                 });
-            document.getElementById("steps").style="font: 25px Arial,Microsoft Yahei;color:#FFFFFF"
+            document.getElementById("steps").style="font: "+String(parseInt(canvas.width/15))+"px Arial,Microsoft Yahei;color:#FFFFFF"
             document.getElementById("steps").innerText="Steps: "+String(step_documents.length-1);
         }
 
@@ -248,11 +258,12 @@
         }
 
         map_degree=Number(get_map_degree());
-        document.getElementById("more").style="background-color:#0E8F81;height:72px;width:72px;font:bold 20px Microsoft Yahei,Arial;color:#034D45";
         alert ("map_degree="+String(map_degree));
         canvas.width=px_scale(20)+px_scale(120)*map_degree;
         canvas.height=px_scale(20)+px_scale(120)*map_degree;
         canvas.style="display: block;margin: 0 auto;border-radius: "+px_scale(10)+"px;background-color: #0E8F81;"
+        document.getElementById("more").style="background-color:#0E8F81;height:"+String(parseInt(canvas.width/7))+"px;width:"+String(parseInt(canvas.width/7))+"px;font:bold 20px Microsoft Yahei,Arial;color:#034D45";
+        document.getElementById("title").style="font:bold "+String(parseInt(canvas.width/6.5))+"px Arial,Microsoft Yahei;color:#FFFFFF;"
         map=createmap(map_degree);
         draw(); 
 
