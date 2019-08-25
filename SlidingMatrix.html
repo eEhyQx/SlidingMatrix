@@ -25,7 +25,7 @@
     <center id="notification" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
     <center id="title" style="font:bold 70px Arial,Microsoft Yahei;color:#FFFFFF">Sliding Matrix</center><br/>
     <center id="steps" style="font:regular 25px Arial,Microsoft Yahei;color:#FFFFFF">steps:</center><br/>
-    <canvas id="canvas" width="0" height="0"></canvas>
+    <canvas id="canvas" width="10" height="10"></canvas>
     <center ></center><br/>
     <center><button id="more" class="mui-btn mui-btn--fab" style="background-color:#0E8F81;font:bold 20px Microsoft Yahei,Arial;color:#034D45">···</button></center>
     <script>
@@ -154,9 +154,7 @@
             return null;
         }
         //j(true) means row-move and k(false) means colomn-move
-        
-                       
-        /* ;*/
+
         function core_location(input){
             if(input in keycom){
                 if(keycom[input].length==2){
@@ -200,7 +198,6 @@
             }
         } 
         
-
         function is_neat(){
             ans=true;
             for (var i=0;i<map_degree;i++){
@@ -214,32 +211,24 @@
             };
             return ans;
         }
-        /*def judge(*state):
-    l=len(state)
-    n=l**0.5
-    s=1
-    if n!=int(n):
-        print "not a square!"
-        return
-    if set(state)!=set(range(0,l)):
-        print "data error!"
-        return
-    if n%2==0:
-        print True
-        return
-    for i in range(0,l):
-        for j in range(0,l):
-            if i>j:
-                s*=(state[i]-state[j])
-    print s>0
-*/
-        //try to prove the existence of solution
-        function has_solution(){
-            ans=true;
-            return ans;            
+
+        function has_solution(state){
+            if(map_degree%2==0){
+                return true;
+            }
+            var s=1;
+            var state_p=state.reduce(function (a, b) { return a.concat(b)} );
+            var len=map_degree*map_degree;
+            for(m=0;m<len;m++){
+                for(n=0;n<len;n++){
+                    if(m>n){
+                        s*=(state_p[m]-state_p[n]);
+                    }
+                }
+            }
+            return s>0;            
         }
 
-        
         var sx,sy,dx,dy,ex,ey;
         canvas.ontouchstart=function(event){
             
