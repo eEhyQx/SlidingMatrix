@@ -10,13 +10,15 @@
             background-color: #0E8F81;
         }
     </style>
+    <link rel="stylesheet" type="text/css" media="screen" href="./mui.css" />
+    <script src="./angular.js"></script>
+    <script src="./mui-angular.js"></script>
 </head>
 <body bgcolor="#034D45">
     <center id="notification" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
-    <center id="title" style="font:bold 70px Arial,Microsoft Yahei;color:#FFFFFF"></center><br/>
-    <center id="steps" style="font:bold 25px Arial,Microsoft Yahei;color:#FFFFFF"></center><br/>
-    <canvas id="canvas" width="500" height="500"></canvas>
-    
+    <center id="title" style="font:bold 70px Arial,Microsoft Yahei;color:#FFFFFF">Sliding Matrix</center><br/>
+    <center id="steps" style="font:bold 25px Arial,Microsoft Yahei;color:#FFFFFF">steps:</center><br/>
+    <canvas id="canvas" width="0" height="0"></canvas>
     <script>
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext('2d');
@@ -97,6 +99,9 @@
                         map[i][x]=map[i+1][x];
                     }
                     map[map_degree-1][x]=tmp;
+                    if(record_on==true){
+                        core_position[0]=(core_position[0]-1+map_degree)%map_degree;
+                    }
                 }
                 else{
                     var tmp=map[x][0];
@@ -104,6 +109,9 @@
                         map[x][i]=map[x][i+1];
                     }
                     map[x][map_degree-1]=tmp;
+                    if(record_on==true){
+                        core_position[1]=(core_position[1]-1+map_degree)%map_degree;
+                    }
                 }
             }
             else{
@@ -119,6 +127,9 @@
                         map[map_degree-i-1][x]=map[map_degree-i-2][x];
                     }
                     map[0][x]=tmp;
+                    if(record_on==true){
+                        core_position[0]=(core_position[0]+1)%map_degree;
+                    }
                 }
                 else{
                     var tmp=map[x][map_degree-1];
@@ -126,6 +137,9 @@
                         map[x][map_degree-i-1]=map[x][map_degree-i-2];
                     }
                     map[x][0]=tmp;
+                    if(record_on==true){
+                        core_position[1]=(core_position[1]+1)%map_degree;
+                    }
                 }
             }
             return null;
@@ -167,12 +181,14 @@
                    setTimeout("tmp=core_color;core_color=default_color;default_color=tmp;reverse=!reverse;draw();","100");
                    return null;
                 }
-                else{
+                else if(keycom[input].length==3){
                     command=keycom[input][2];
                     return command;
                 }
             }
-            else return null;
+            else{
+                return null;
+            }
         } 
         
 
@@ -224,7 +240,6 @@
         canvas.ontouchend=function(event){
         }
 
-        document.getElementById("title").innerText="Sliding Matrix";
         map_degree=Number(get_map_degree());
         document.getElementById("title").style="font:bold "+String(parseInt(75*map_degree/4))+"px Arial,Microsoft Yahei;color:#FFFFFF"
         alert ("map_degree="+String(map_degree));  
@@ -235,15 +250,12 @@
 
         document.onkeydown=function(e){
             dir =(e?e:event).keyCode;
-            console.log(dir);
             cmd=core_location(dir);
             if (cmd!=null){
-
                 move(core_position[cmd],cmd);
             }
             draw();
-        };       
-
+        };
     </script>
 </body>
 </html>
