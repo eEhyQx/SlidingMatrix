@@ -1,2 +1,2 @@
-# SlidingMatrix
+# Sliding Matrix
 Game of SlidingMatrix.
