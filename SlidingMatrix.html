@@ -65,13 +65,15 @@
         
         
         function createmap(degree){
-            var map=new Array();
+            map=new Array();
+            temp=randomlize()
             for(var i=0;i<degree;i++){
                 map[i]=new Array();
                 for(var j=0;j<degree;j++){
-                    map[i][j]=1+i*degree+j;
+                    map[i][j]=temp[i*degree+j];
                 }
             }
+            
             return map;
         }
 
@@ -239,18 +241,18 @@
             var n_square=new Array();
             var new_array=[];
             for (var i=0;i<map_degree**2;i++){
-                n_square[i]=i+1;
+                n_square.push(i+1);
             }
-            for (var j=0;i<map_degree**2;j++){
+            for (var j=0;j<map_degree**2;j++){
                 var ran=Math.floor(Math.random()*(n_square.length-j));
                 new_array.push(n_square[ran]);
                 n_square[ran]=n_square[n_square.length-j-1];
             }
+            console.log(n_square);
             console.log(new_array);
-            return;
+            return new_array;
         }
 
-        randomlize();  
 
         var sx,sy,drandx,dy,ex,ey;
         canvas.ontouchstart=function(event){
