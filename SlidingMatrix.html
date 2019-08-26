@@ -165,9 +165,6 @@
                     }
                 }
             }
-            if (is_neat()){
-                alert("You win!");
-            }
             return null;
         }
         //j(true) means row-move and k(false) means colomn-move
@@ -210,7 +207,7 @@
             ans=true;
             for (var i=0;i<map_degree;i++){
                 for (var j=0;j<map_degree;j++){
-                    if ((i*map_degree+j)!=map[i][j]){
+                    if ((i*map_degree+j+1)!=map[i][j]){
                         ans=false;
                         break;
                     }   
@@ -286,6 +283,9 @@
                 move(core_position[cmd[0]],cmd[0],cmd[1]);
             }
             draw();
+            if (is_neat()){
+                setTimeout('alert("You win!");',String(50+2*map_degree))
+            }
         };
     </script>
 </body>
