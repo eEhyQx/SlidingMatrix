@@ -12,20 +12,93 @@
             background-color: #0E8F81;
         }
         button {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+        }
+        mydiv{
+            position: absolute;
+            left:50%;
+            top:50%;
+            transform: translate(-50%, -50%);
+        }
+        .modal {
+            position: absolute;
+            z-index:1;
+            left:50%;
+            top:50%;
+            transform: translate(-50%, -50%);
+            display: none; /* 默认隐藏 */
+            width: 100%; 
+            height: 100%;
+            background-color: rgba(0,0,0,0.4); 
+        }
+
+        /* 弹窗内容 */
+        .modal-content {
+            background-color: #0E8F81;
+            margin: 0 auto; 
+            padding: 10px;
+            width: 60%;
+            height:40%;
+        }
+
+        /* 关闭按钮 */
+        .close {
+            color: white;
+            float: right;
+            font-size: 50px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
     <link rel="stylesheet" type="text/css" media="screen" href="./css/mui.css" />
     <script src="./js/mui.js"></script>
 </head>
-<body style="background-color: #034D45;display:block;">
+<body style="background-color: #034D45;display:flex;">
+    <div id="more_window" class="modal">
+        <mydiv class="modal-content">
+            <span class="close" style="padding:0 20px 0 0" onclick="document.getElementById('more_window').style.display = 'none';">&times;</span>
+            <p style="font:bold 60px Microsoft Yahei,Arial;color:#FFFFFF;padding:8px 0 0 20px">PlayGround Dashboard</p>
+            <form class="mui-form--inline" style="padding:20px 0 0 20px" onsubmit="return false">
+                <div class="mui-textfield" >
+                    <input id="Map-degree" type="text" style="color:#034D45;">
+                    <label style="color:#034D45;">Map-degree</label>
+                </div>
+                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="button_create_map(false);">Submit</button>
+                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="button_create_map(true);">Randomize</button>
+            </form>
+            <form class="mui-form--inline" style="padding:20px 0 0 20px">
+                <div class="mui-textfield" >
+                    <input id="Create-Map" type="text" style="color:#034D45">
+                    <label style="color:#034D45;">Create-Map</label>
+                </div>
+                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;">Submit</button>
+            </form>
+            <form class="mui-form--inline" style="padding:20px 0 0 20px">
+                <div class="mui-textfield" >
+                    <input id="Import-Steps" type="text" style="color:#034D45" placeholder="Enter steps you want.">
+                    <label style="color:#034D45;">Import-Steps</label>
+                </div>
+                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;">Submit</button>
+            </form>
+            <span class="close" style="float:left;font-size:15px;font-weight:regular;color:#034D45;padding:20px 0 0 20px;" onclick="download('Steps', step_documents);">Download my solution</span>
+            <span class="close" style="font-size:20px;font-weight:regular;color:#034D45;padding:20px 20px 0 0;">Help</span>
+        </mydiv>
+    </div>
+    <mydiv id="main">
         <center id="title" style="font:bold 70px Arial,Microsoft Yahei;color:#FFFFFF;">Sliding Matrix</center><br/>
         <center id="steps" style="font:regular 25px Arial,Microsoft Yahei;color:#FFFFFF">steps:</center><br/>
         <canvas id="canvas" width="10" height="10"></canvas>
         <center id="gap"></center>
         <center><button id="more" class="mui-btn mui-btn--fab" style="background-color:#0E8F81;font:bold 20px Microsoft Yahei,Arial;color:#034D45" onclick="more_window()">···</button></center>
+    </mydiv>
     <script>
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext('2d');
@@ -48,6 +121,27 @@
         var screen_Width=window.screen.width;
         var screen_Height=window.screen.height;
 
+        function download(filename, text) {
+          var element = document.createElement('a');
+          element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+          element.setAttribute('download', filename);
+
+          element.style.display = 'none';
+          document.body.appendChild(element);
+
+          element.click();
+
+          document.body.removeChild(element);
+        }
+
+
+        function more_window(){
+            document.getElementById('Map-degree').value=String(map_degree);
+            document.getElementById('more_window').style.display='block';
+            document.getElementById('Create-Map').value=String(map);
+
+        }
+
         function px_scale(px_num){
             if(screen_Height>500 && screen_Width>500 && screen_Height>=screen_Width){
                 return parseInt(px_num/map_degree/800*screen_Width*4);
@@ -62,22 +156,42 @@
                 return parseInt(px_num/map_degree/300*screen_Width*4);
             }
         }
-        
-        
-        function createmap(degree){
+
+        function button_create_map(is_randomlize){
+            set_map_by_degree(document.getElementById('Map-degree').value,is_randomlize);
+        }
+
+        function set_map_by_degree(user_degree,is_randomlize){
+            core_position=[0,0];
+            map_degree = user_degree;
+            canvas.width=px_scale(20)+px_scale(120)*map_degree;
+            canvas.height=px_scale(20)+px_scale(120)*map_degree;
+            step_documents=new Array();
+            step_documents[0]=['num','row_or_col','times'];
+            map=createmap(user_degree,is_randomlize);
+            draw();
+        }
+
+        function createmap(degree,is_randomlize=true){
             map=new Array();
-            temp=randomlize()
+            temp=randomlize();
             for(var i=0;i<degree;i++){
                 map[i]=new Array();
                 for(var j=0;j<degree;j++){
-                    map[i][j]=temp[i*degree+j];
+                    if(is_randomlize){
+                        map[i][j]=temp[i*degree+j];
+                    }
+                    else{
+                        map[i][j]=i*degree+j+1;
+                    }
                 }
             }
-            while (!has_solution(map)){
-                map=createmap(degree);
-                console.log("re-create map");
+            if(randomlize){
+                while (!has_solution(map)){
+                    map=createmap(degree);
+                    console.log("re-create map");
+                }
             }
-            
             return map;
         }
 
@@ -234,11 +348,6 @@
             return s>0;            
         }
 
-        function more_window(){
-            var canvas_more = document.createElement('canvas');
-            canvas_more.style=""
-            document.body.appendChild(canvas_more);
-        }
 
         //to get a om sistribution of the map
         function randomlize() {
@@ -252,8 +361,6 @@
                 new_array.push(n_square[ran]);
                 n_square[ran]=n_square[n_square.length-j-1];
             }
-            console.log(n_square);
-            console.log(new_array);
             return new_array;
         }
 
@@ -271,20 +378,22 @@
         canvas.height=px_scale(20)+px_scale(120)*map_degree;
         canvas.style="display: block;border-radius: "+px_scale(10)+"px;background-color: #0E8F81;"
         document.getElementById("more").style="background-color:#0E8F81;height:"+String(parseInt(canvas.width/7))+"px;width:"+String(parseInt(canvas.width/7))+"px;font:bold "+String(parseInt(canvas.width/20))+"px Microsoft Yahei,Arial;color:#034D45;";
-        document.getElementById("title").style="font:bold "+String(parseInt(canvas.width/6.5))+"px Arial,Microsoft Yahei;color:#FFFFFF;padding:"+String(parseInt(canvas.width/15))+"px 0 0 0;"
+        document.getElementById("title").style="font:bold "+String(parseInt(canvas.width/7))+"px Arial,Microsoft Yahei;color:#FFFFFF;"
         document.getElementById("gap").style="padding:"+String(parseInt(canvas.width/15))+"px 0 0 0;"
         map=createmap(map_degree);
         draw(); 
 
         document.onkeydown=function(e){
-            dir =(e?e:event).keyCode;
-            cmd=core_location(dir);
-            if (cmd!=null){
-                move(core_position[cmd[0]],cmd[0],cmd[1]);
-            }
-            draw();
-            if (is_neat()){
-                setTimeout('alert("You win!");',String(50+2*map_degree))
+            if(document.getElementById('more_window').style.display!="block"){
+                dir =(e?e:event).keyCode;
+                cmd=core_location(dir);
+                if (cmd!=null){
+                    move(core_position[cmd[0]],cmd[0],cmd[1]);
+                    if (is_neat()){
+                        setTimeout('alert("You win!");',String(50+2*map_degree))
+                    }
+                }
+                draw();
             }
         };
     </script>
