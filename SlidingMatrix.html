@@ -20,16 +20,12 @@
     <link rel="stylesheet" type="text/css" media="screen" href="./css/mui.css" />
     <script src="./js/mui.js"></script>
 </head>
-<body style="background-color: #034D45;">
-        <center id="notification_1" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
-        <center id="notification_2" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
+<body style="background-color: #034D45;display:block;">
         <center id="title" style="font:bold 70px Arial,Microsoft Yahei;color:#FFFFFF;">Sliding Matrix</center><br/>
         <center id="steps" style="font:regular 25px Arial,Microsoft Yahei;color:#FFFFFF">steps:</center><br/>
         <canvas id="canvas" width="10" height="10"></canvas>
-        <center id="notification_3" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
-        <center id="notification_4" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
-        <center><button id="more" class="mui-btn mui-btn--fab" style="background-color:#0E8F81;font:bold 20px Microsoft Yahei,Arial;color:#034D45">···</button></center>
-        <center id="notification_5" style="font:bold 20px Arial,Microsoft Yahei;color:#FFFFFF" ></center><br/>
+        <center id="gap"></center>
+        <center><button id="more" class="mui-btn mui-btn--fab" style="background-color:#0E8F81;font:bold 20px Microsoft Yahei,Arial;color:#034D45" onclick="more_window()">···</button></center>
     <script>
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext('2d');
@@ -51,12 +47,6 @@
         step_documents[0]=['num','row_or_col','times'];
         var screen_Width=window.screen.width;
         var screen_Height=window.screen.height;
-
-        //add function get_map_degree
-        function get_map_degree(){
-            map_degree=prompt("Please choose the degree of the matrix:(positive integer)","4"); 
-            return map_degree;           
-        }
 
         function px_scale(px_num){
             if(screen_Height>500 && screen_Width>500 && screen_Height>=screen_Width){
@@ -238,7 +228,31 @@
             return s>0;            
         }
 
-        var sx,sy,dx,dy,ex,ey;
+        function more_window(){
+            var canvas_more = document.createElement('canvas');
+            canvas_more.style=""
+            document.body.appendChild(canvas_more);
+        }
+
+        //to get a om sistribution of the map
+        function randomlize() {
+            var n_square=new Array();
+            var new_array=[];
+            for (var i=0;i<map_degree**2;i++){
+                n_square[i]=i+1;
+            }
+            for (var j=0;i<map_degree**2;j++){
+                var ran=Math.floor(Math.random()*(n_square.length-j));
+                new_array.push(n_square[ran]);
+                n_square[ran]=n_square[n_square.length-j-1];
+            }
+            console.log(new_array);
+            return;
+        }
+
+        randomlize();  
+
+        var sx,sy,drandx,dy,ex,ey;
         canvas.ontouchstart=function(event){
             
         }
@@ -247,13 +261,12 @@
         canvas.ontouchend=function(event){
         }
 
-        map_degree=Number(get_map_degree());
-        alert ("map_degree="+String(map_degree));
         canvas.width=px_scale(20)+px_scale(120)*map_degree;
         canvas.height=px_scale(20)+px_scale(120)*map_degree;
-        canvas.style="display: block;margin: 0 auto;border-radius: "+px_scale(10)+"px;background-color: #0E8F81;"
-        document.getElementById("more").style="background-color:#0E8F81;height:"+String(parseInt(canvas.width/7))+"px;width:"+String(parseInt(canvas.width/7))+"px;font:bold 20px Microsoft Yahei,Arial;color:#034D45";
-        document.getElementById("title").style="font:bold "+String(parseInt(canvas.width/6.5))+"px Arial,Microsoft Yahei;color:#FFFFFF;"
+        canvas.style="display: block;border-radius: "+px_scale(10)+"px;background-color: #0E8F81;"
+        document.getElementById("more").style="background-color:#0E8F81;height:"+String(parseInt(canvas.width/7))+"px;width:"+String(parseInt(canvas.width/7))+"px;font:bold "+String(parseInt(canvas.width/20))+"px Microsoft Yahei,Arial;color:#034D45;";
+        document.getElementById("title").style="font:bold "+String(parseInt(canvas.width/6.5))+"px Arial,Microsoft Yahei;color:#FFFFFF;padding:"+String(parseInt(canvas.width/15))+"px 0 0 0;"
+        document.getElementById("gap").style="padding:"+String(parseInt(canvas.width/15))+"px 0 0 0;"
         map=createmap(map_degree);
         draw(); 
 
