@@ -36,12 +36,11 @@
         var map_degree=4;
         var map;
         var offsetx = {1:53,2:34,3:28,4:25};
-        var keycom = {'87':[-1,0],'83':[1,0],'65':[0,-1],'68':[0,1],'74':[0,0,0],'75':[0,0,1],'76':"reverse",'79':"go_back"}; 
+        var keycom = {'87':[-1,0],'83':[1,0],'65':[0,-1],'68':[0,1],'74':[0,true,0],'75':[0,false,1],'76':[0,false,0],'73':[0,true,1],'79':"go_back"}; 
         //up,down,left,right,j,k,l
         //add row and colomn move
         var row_move=0;
         var col_move=0;
-        var reverse=false;
         
         var default_color="#8AD9D0";
         var core_color="#FFFFFF";
@@ -112,7 +111,7 @@
                 }
         }
      
-        function move(x,direction,reverse_on=reverse,record_on=true){
+        function move(x,direction,reverse_on=false,record_on=true){
             var step=[x,direction];
             if(reverse_on==true){
                 if(step[0]==step_documents[step_documents.length-1][0] && step[1]==step_documents[step_documents.length-1][1] && record_on==true){
@@ -182,19 +181,10 @@
                     core_position[1]+=keycom[input][1];
                     core_position[1]=(core_position[1]+map_degree)%map_degree;
                 }
-                else if(keycom[input]=="reverse"){
-                   tmp=core_color;
-                   core_color=default_color;
-                   default_color=tmp;
-                   reverse= !reverse;
-                   console.log(String(reverse))
-                   return null;
-                }
                 else if(keycom[input]=="go_back"){
                    tmp=core_color;
                    core_color=default_color;
                    default_color=tmp;
-                   reverse=!reverse;
                    tmp=step_documents[step_documents.length-1];
                    var i=0;
                    while(i<tmp[2]){
@@ -204,11 +194,11 @@
                    if(step_documents.length>1){
                        step_documents.pop();
                    }
-                   setTimeout("tmp=core_color;core_color=default_color;default_color=tmp;reverse=!reverse;draw();","100");
+                   setTimeout("tmp=core_color;core_color=default_color;default_color=tmp;draw();","100");
                    return null;
                 }
                 else if(keycom[input].length==3){
-                    command=keycom[input][2];
+                    command=[keycom[input][2],keycom[input][1]];
                     return command;
                 }
             }
@@ -271,7 +261,7 @@
             dir =(e?e:event).keyCode;
             cmd=core_location(dir);
             if (cmd!=null){
-                move(core_position[cmd],cmd);
+                move(core_position[cmd[0]],cmd[0],cmd[1]);
             }
             draw();
         };
