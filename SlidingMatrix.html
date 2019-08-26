@@ -73,6 +73,10 @@
                     map[i][j]=temp[i*degree+j];
                 }
             }
+            while (!has_solution(map)){
+                map=createmap(degree);
+                console.log("re-create map");
+            }
             
             return map;
         }
