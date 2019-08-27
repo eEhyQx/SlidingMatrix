@@ -29,7 +29,7 @@ A Sliding Matrix is a square with `n*n` blocks filled with misplaced integer fro
 
 Solve the sliding Matrix by transform it to ordered integer `1~n*n`.
 
-![map_guide](imgs\map_guide.png)
+![map_guide](./imgs/map_guide.png)
 
 ## PlayGround Mode
 
