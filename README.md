@@ -37,6 +37,6 @@ Solve the sliding Matrix by transform it to ordered integer `1~n*n`.
 
 ## Reference
 
-[Research into 2D Magic Cube  and Cayley Graph Diameter]([https://github.com/eEhyQx/WeCreate/blob/master/0x02.%5Ben%5DResearch%20into%202D%20Magic%20Cube.pdf](https://github.com/eEhyQx/WeCreate/blob/master/0x02.[en]Research into 2D Magic Cube.pdf))
+[Research into 2D Magic Cube  and Cayley Graph Diameter](https://github.com/eEhyQx/WeCreate/blob/master/0x02.%5Ben%5DResearch%20into%202D%20Magic%20Cube.pdf)
 
-[对平面魔方群及其Cayley图直径的研究]([https://github.com/eEhyQx/WeCreate/blob/master/0x02.%5Bcn%5D%E5%AF%B9%E5%B9%B3%E9%9D%A2%E9%AD%94%E6%96%B9%E7%BE%A4%E5%8F%8A%E5%85%B6Cayley%E5%9B%BE%E7%9B%B4%E5%BE%84%E7%9A%84%E7%A0%94%E7%A9%B6.pdf](https://github.com/eEhyQx/WeCreate/blob/master/0x02.[cn]对平面魔方群及其Cayley图直径的研究.pdf))
+[对平面魔方群及其Cayley图直径的研究](https://github.com/eEhyQx/WeCreate/blob/master/0x02.%5Bcn%5D%E5%AF%B9%E5%B9%B3%E9%9D%A2%E9%AD%94%E6%96%B9%E7%BE%A4%E5%8F%8A%E5%85%B6Cayley%E5%9B%BE%E7%9B%B4%E5%BE%84%E7%9A%84%E7%A0%94%E7%A9%B6.pdf)
