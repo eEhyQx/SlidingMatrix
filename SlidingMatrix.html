@@ -66,27 +66,27 @@
         <mydiv class="modal-content">
             <span class="close" style="padding:0 20px 0 0" onclick="document.getElementById('more_window').style.display = 'none';">&times;</span>
             <p style="font:bold 60px Microsoft Yahei,Arial;color:#FFFFFF;padding:8px 0 0 20px">PlayGround Dashboard</p>
-            <form class="mui-form--inline" style="padding:20px 0 0 20px" onsubmit="return false">
+            <form class="mui-form--inline" style="padding:20px 0 0 20px" onsubmit="return false;">
                 <div class="mui-textfield" >
                     <input id="Map-degree" type="text" style="color:#034D45;">
                     <label style="color:#034D45;">Map-degree</label>
                 </div>
-                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="button_create_map(false);">Submit</button>
-                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="button_create_map(true);">Randomize</button>
+                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="set_map_by_degree(degree=Number(document.getElementById('Map-degree').value),false);document.getElementById('more_window').style.display = 'none';">Submit</button>
+                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="set_map_by_degree(degree=Number(document.getElementById('Map-degree').value),true);document.getElementById('more_window').style.display = 'none';">Randomize</button>
             </form>
-            <form class="mui-form--inline" style="padding:20px 0 0 20px">
+            <form class="mui-form--inline" style="padding:20px 0 0 20px" onsubmit="return false;">
                 <div class="mui-textfield" >
                     <input id="Create-Map" type="text" style="color:#034D45">
                     <label style="color:#034D45;">Create-Map</label>
                 </div>
-                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;">Submit</button>
+                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="set_map_by_map(document.getElementById('Create-Map').value);document.getElementById('more_window').style.display ='none';">Submit</button>
             </form>
-            <form class="mui-form--inline" style="padding:20px 0 0 20px">
+            <form class="mui-form--inline" style="padding:20px 0 0 20px" onsubmit="return false;">
                 <div class="mui-textfield" >
                     <input id="Import-Steps" type="text" style="color:#034D45" placeholder="Enter steps you want.">
                     <label style="color:#034D45;">Import-Steps</label>
                 </div>
-                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;">Submit</button>
+                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="import_steps(document.getElementById('Import-Steps').value);document.getElementById('more_window').style.display ='none';">Submit</button>
             </form>
             <span class="close" style="float:left;font-size:15px;font-weight:regular;color:#034D45;padding:20px 0 0 20px;" onclick="download('Steps', step_documents);">Download my solution</span>
             <span class="close" style="font-size:20px;font-weight:regular;color:#034D45;padding:20px 20px 0 0;">Help</span>
@@ -114,13 +114,12 @@
         var default_color="#8AD9D0";
         var core_color="#FFFFFF";
         var default_num_size={1:60,2:60,3:50,4:40};
-        var stepcount=0;
         var core_position=[0,0];
         var step_documents=new Array();
         step_documents[0]=['num','row_or_col','times'];
         var screen_Width=window.screen.width;
         var screen_Height=window.screen.height;
-
+        
         function download(filename, text) {
           var element = document.createElement('a');
           element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -137,9 +136,8 @@
 
         function more_window(){
             document.getElementById('Map-degree').value=String(map_degree);
-            document.getElementById('more_window').style.display='block';
             document.getElementById('Create-Map').value=String(map);
-
+            document.getElementById('more_window').style.display='block';
         }
 
         function px_scale(px_num){
@@ -157,13 +155,10 @@
             }
         }
 
-        function button_create_map(is_randomlize){
-            set_map_by_degree(document.getElementById('Map-degree').value,is_randomlize);
-        }
-
         function set_map_by_degree(user_degree,is_randomlize){
             core_position=[0,0];
             map_degree = user_degree;
+            canvas.style="display: block;border-radius: "+px_scale(10)+"px;background-color: #0E8F81;"
             canvas.width=px_scale(20)+px_scale(120)*map_degree;
             canvas.height=px_scale(20)+px_scale(120)*map_degree;
             step_documents=new Array();
@@ -172,9 +167,42 @@
             draw();
         }
 
-        function createmap(degree,is_randomlize=true){
+        function set_map_by_map(map){
+            core_position=[0,0];
+            map=map.split(',').map(Number);
+            map_degree = parseInt(Math.sqrt(map.length))
+            canvas.style="display: block;border-radius: "+px_scale(10)+"px;background-color: #0E8F81;"
+            canvas.width=px_scale(20)+px_scale(120)*map_degree;
+            canvas.height=px_scale(20)+px_scale(120)*map_degree;
+            step_documents=new Array();
+            step_documents[0]=['num','row_or_col','times'];
+            map=createmap(map_degree,true,set_map=map);
+            draw();
+        }
+
+        function import_steps(steps){
+            core_position_tmp=core_position.slice();
+            console.log(core_position_tmp)
+            steps=steps.split(',').map(Number);
+            for(i=0;i<steps.length;i=i+3){
+                var tmp=[steps[i],steps[i+1],steps[i+2]]
+                var j=0;
+                while(j<tmp[2]){
+                    move(tmp[0],tmp[1],false,true);
+                    j++;
+                }
+            }
+            core_position=core_position_tmp.slice();draw();
+        }
+
+        function createmap(degree,is_randomlize=true,set_map=null){
             map=new Array();
-            temp=randomlize();
+            if(set_map!=null){
+                temp=set_map
+            }
+            else{
+                temp=randomlize();
+            }
             for(var i=0;i<degree;i++){
                 map[i]=new Array();
                 for(var j=0;j<degree;j++){
@@ -286,15 +314,12 @@
         function core_location(input){
             if(input in keycom){
                 if(keycom[input].length==2){
-                    core_position[0]+=keycom[input][0];
-                    core_position[0]=(core_position[0]+map_degree)%map_degree;
-                    core_position[1]+=keycom[input][1];
-                    core_position[1]=(core_position[1]+map_degree)%map_degree;
+                    core_position[0]=(core_position[0]+keycom[input][0]+map_degree)%map_degree;
+                    core_position[1]=(core_position[1]+keycom[input][1]+map_degree)%map_degree;
+                    return null;
                 }
                 else if(keycom[input]=="go_back"){
-                   tmp=core_color;
-                   core_color=default_color;
-                   default_color=tmp;
+                   tmp=core_color;core_color=default_color;default_color=tmp;draw();
                    tmp=step_documents[step_documents.length-1];
                    var i=0;
                    while(i<tmp[2]){
