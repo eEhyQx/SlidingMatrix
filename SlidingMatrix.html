@@ -40,7 +40,6 @@
             margin: 0 auto; 
             padding: 10px;
             width: 60%;
-            height:40%;
         }
 
         /* 关闭按钮 */
@@ -182,15 +181,16 @@
 
         function import_steps(steps){
             core_position_tmp=core_position.slice();
-            console.log(core_position_tmp)
+            var i=0;
             steps=steps.split(',').map(Number);
-            for(i=0;i<steps.length;i=i+3){
+            while(i<steps.length){
                 var tmp=[steps[i],steps[i+1],steps[i+2]]
                 var j=0;
                 while(j<tmp[2]){
                     move(tmp[0],tmp[1],false,true);
                     j++;
                 }
+                i+=3;
             }
             core_position=core_position_tmp.slice();draw();
         }
