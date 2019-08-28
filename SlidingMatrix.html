@@ -224,10 +224,10 @@
 
         function import_steps(steps){
             core_position_tmp=core_position.slice();
-            console.log(core_position_tmp);
+            console.log("core pos temp:",core_position_tmp);
             var i=0;
             steps=steps.split(',').map(Number);
-            console.log(steps);
+            console.log("steps",steps);
             while(i<steps.length){
                 var tmp=[steps[i],steps[i+1],steps[i+2]]
                 var j=0;
