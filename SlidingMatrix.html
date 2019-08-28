@@ -163,18 +163,25 @@
             step_documents=new Array();
             step_documents[0]=['num','row_or_col','times'];
             map=createmap(user_degree,is_randomlize);
-            draw();
+            if (is_degree_valid(user_degree))
+            {
+                draw();
+            }
+            
         }
         //add function is_degree_valid to normalize the input
         function is_degree_valid(degree){
             var ans=true;
             if (Number(degree)==NaN){
+                map=0;
                 return false;
             }
             else{
                 map_degree=parseInt(Number(degree),10);
+                console.log(map_degree);
             }
             if (map_degree>10 || map_degree<1){
+                map=0;
                 return false;
             }
             return ans;
@@ -268,7 +275,6 @@
             if (!is_map_valid(map,degree)){
                 alert("map is not valid!");
                 map=0;
-                return map;
             }
         
             return map;
@@ -457,7 +463,7 @@
         document.getElementById("title").style="font:bold "+String(parseInt(canvas.width/7))+"px Arial,Microsoft Yahei;color:#FFFFFF;"
         document.getElementById("gap").style="padding:"+String(parseInt(canvas.width/15))+"px 0 0 0;"
         map=createmap(map_degree);
-        if (map!=0){
+        if (map[0]!=0){
             draw(); 
         }
         
