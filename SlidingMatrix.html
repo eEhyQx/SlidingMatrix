@@ -117,7 +117,7 @@
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext('2d');
         var map_degree=4;
-        var map=0;
+        var map;
         var offsetx = {1:53,2:34,3:28,4:25};
         var keycom = {'87':[-1,0],'83':[1,0],'65':[0,-1],'68':[0,1],'74':[0,true,0],'75':[0,false,1],'76':[0,false,0],'73':[0,true,1],'79':"go_back"}; 
         //up,down,left,right,j,k,l
@@ -236,6 +236,10 @@
             core_position=core_position_tmp.slice();draw();
         }
 
+        function is_import_steps_valid(){
+            //yet to come
+        }
+
         function createmap(degree,is_randomlize=true,set_map=null){
             var map=new Array();
             if(set_map!=null){
@@ -261,10 +265,7 @@
                     console.log("re-create map");
                 }
             }
-            if (!is_map_valid(map,degree)){
-                alert("map is not valid!");
-                map=0;
-            }
+            
         
             return map;
         }
