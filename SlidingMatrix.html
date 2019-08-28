@@ -167,14 +167,14 @@
         }
         //add function is_degree_valid to normalize the input
         function is_degree_valid(degree){
-            ans=true;
+            var ans=true;
             if (Number(degree)==NaN){
                 console.log(typeof(degree),degree);
                 return false;
             }
             else{
                 console.log(typeof(degree),degree);
-                map_degree=Number(degree).parseInt();
+                map_degree=parseInt(Number(degree),10);
             }
             if (map_degree>10 || map_degree<1){
                 console.log(typeof(degree),degree);
@@ -197,21 +197,28 @@
         }
 
         //add a function to detect if the imported map is valid 
-        function is_map_valid(){
-            ans=true;
-            var temp_map=[];
-            var temp_set;
-            for (var i=0;i<map_degree**2;i++){
-                temp_map[i]=map[i/map_degree][i%map_degree];
-                if (temp_map[i]<0 || temp_map[i]>map_degree**2)
-                {
-                    return false;
-                }
+        function is_map_valid(map,degree){
+            var ans=true;
+            var temp_map=new Array();
+            
+            for (var i=0;i<degree;i++){
+                for (var j=0;j<degree;j++){
+                    temp_map[i*degree+j]=map[i][j];
+                    if (map[i][j]<0 || map[i][j]>degree**2){
+                        return false;
+                    }
+                } 
+                
             }
-            temp_set=new Set(temp_map);
-            if (temp_set.length!=map_degree**2){
+            var temp_set=new Set(temp_map);
+            console.log(temp_set);
+            console.log(temp_set.size);
+            console.log(degree**2);
+            if (temp_set.size!=degree**2){
+                console.log("hh");
                 return false;
             }
+            console.log("hh");
             return ans;
         }
 
@@ -232,7 +239,10 @@
         }
 
         function createmap(degree,is_randomlize=true,set_map=null){
-            map=new Array();
+            var map=new Array();
+            if (!is_degree_valid(degree)){
+                alert("map is not valid!");
+            }
             if(set_map!=null){
                 temp=set_map
             }
@@ -256,10 +266,10 @@
                     console.log("re-create map");
                 }
             }
-            if (!(is_degree_valid(degree) && is_map_valid())){
+            if (!is_map_valid(map,degree)){
                 alert("map is not valid!");
             }
-
+        
             return map;
         }
 
