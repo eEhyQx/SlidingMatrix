@@ -102,7 +102,7 @@
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext('2d');
         var map_degree=4;
-        var map=0;
+        var map;
         var offsetx = {1:53,2:34,3:28,4:25};
         var keycom = {'87':[-1,0],'83':[1,0],'65':[0,-1],'68':[0,1],'74':[0,true,0],'75':[0,false,1],'76':[0,false,0],'73':[0,true,1],'79':"go_back"}; 
         //up,down,left,right,j,k,l
@@ -163,7 +163,7 @@
             step_documents=new Array();
             step_documents[0]=['num','row_or_col','times'];
             map=createmap(user_degree,is_randomlize);
-            drwa();
+            draw();
             
         }
         //add function is_degree_valid to normalize the input
