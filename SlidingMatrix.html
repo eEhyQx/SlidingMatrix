@@ -102,7 +102,7 @@
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext('2d');
         var map_degree=4;
-        var map;
+        var map=0;
         var offsetx = {1:53,2:34,3:28,4:25};
         var keycom = {'87':[-1,0],'83':[1,0],'65':[0,-1],'68':[0,1],'74':[0,true,0],'75':[0,false,1],'76':[0,false,0],'73':[0,true,1],'79':"go_back"}; 
         //up,down,left,right,j,k,l
@@ -169,15 +169,12 @@
         function is_degree_valid(degree){
             var ans=true;
             if (Number(degree)==NaN){
-                console.log(typeof(degree),degree);
                 return false;
             }
             else{
-                console.log(typeof(degree),degree);
                 map_degree=parseInt(Number(degree),10);
             }
             if (map_degree>10 || map_degree<1){
-                console.log(typeof(degree),degree);
                 return false;
             }
             return ans;
@@ -241,7 +238,9 @@
         function createmap(degree,is_randomlize=true,set_map=null){
             var map=new Array();
             if (!is_degree_valid(degree)){
-                alert("map is not valid!");
+                alert("map degree is not valid!");
+                map=0;
+                return map;
             }
             if(set_map!=null){
                 temp=set_map
@@ -268,6 +267,8 @@
             }
             if (!is_map_valid(map,degree)){
                 alert("map is not valid!");
+                map=0;
+                return map;
             }
         
             return map;
@@ -456,7 +457,10 @@
         document.getElementById("title").style="font:bold "+String(parseInt(canvas.width/7))+"px Arial,Microsoft Yahei;color:#FFFFFF;"
         document.getElementById("gap").style="padding:"+String(parseInt(canvas.width/15))+"px 0 0 0;"
         map=createmap(map_degree);
-        draw(); 
+        if (map!=0){
+            draw(); 
+        }
+        
 
         document.onkeydown=function(e){
             if(document.getElementById('more_window').style.display!="block"){
