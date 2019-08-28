@@ -40,6 +40,8 @@ PlayGround Mode is a mode for training and testing. In this mode you can,
 - [x] Download my solution
 - [ ] Create map by seed
 
+![Play Ground Mode](./imgs/PlayGround mode.jpg)
+
 ## Battle Mode
 
 ## Reference
