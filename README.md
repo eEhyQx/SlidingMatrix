@@ -8,7 +8,7 @@
 - [x] Step documents
 - [x] Create map by degree
 - [x] Set map by sequence
-- [x] Move according to sequence 
+- [x] Import steps according to sequence 
 - [x] Download my solution
 - [ ] Help
 - [ ] Play Ground Mode
@@ -32,6 +32,13 @@ Solve the sliding Matrix by transform it to ordered integer `1~n*n`.
 ![map_guide](./imgs/map_guide.png)
 
 ## PlayGround Mode
+
+PlayGround Mode is a mode for training and testing. In this mode you can,
+- [x] Create random or ordered map by degree
+- [x] Set map by sequence
+- [x] Import steps according to sequence
+- [x] Download my solution
+- [ ] Create map by seed
 
 ## Battle Mode
 
