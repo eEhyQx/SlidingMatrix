@@ -1593,7 +1593,7 @@ h4, h5, h6 {
 .mui-select:focus > select {
   height: calc(32px + 1px);
   margin-bottom: -1px;
-  border-color: #2196F3;
+  border-color: #FFFFFF;
   border-width: 2px;
 }
 

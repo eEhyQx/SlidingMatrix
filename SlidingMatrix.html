@@ -66,8 +66,23 @@
             <span class="close" style="padding:0 20px 0 0" onclick="document.getElementById('more_window').style.display = 'none';">&times;</span>
             <p style="font:bold 60px Microsoft Yahei,Arial;color:#FFFFFF;padding:8px 0 0 20px">PlayGround Dashboard</p>
             <form class="mui-form--inline" style="padding:20px 0 0 20px" onsubmit="return false;">
-                <div class="mui-textfield" >
-                    <input id="Map-degree" type="text" style="color:#034D45;">
+                <div class="mui-select" >
+                    <select id="Map-degree" style="color:#034D45;width:195px">
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                    </select>
                     <label style="color:#034D45;">Map-degree</label>
                 </div>
                 <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="set_map_by_degree(degree=Number(document.getElementById('Map-degree').value),false);document.getElementById('more_window').style.display = 'none';">Submit</button>
@@ -164,7 +179,6 @@
             step_documents[0]=['num','row_or_col','times'];
             map=createmap(user_degree,is_randomlize);
             draw();
-            
         }
         //add function is_degree_valid to normalize the input
         //to validate the input, we add a pull-down menu to normalize map degree
