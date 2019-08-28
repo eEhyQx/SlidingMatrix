@@ -246,6 +246,7 @@
             steps=steps.split(',').map(Number);
             if(is_steps_valid(steps)){
             core_position_tmp=core_position.slice();
+            console.log("core pos temp:",core_position_tmp);
             var i=0;
             while(i<steps.length){
                 var tmp=[steps[i],steps[i+1],steps[i+2]]
@@ -449,7 +450,6 @@
             return s>0;            
         }
 
-
         //to get a om sistribution of the map
         function randomlize() {
             var n_square=new Array();
@@ -468,7 +468,6 @@
 
         var sx,sy,drandx,dy,ex,ey;
         canvas.ontouchstart=function(event){
-            
         }
         canvas.ontouchmove=function(event){
         }
@@ -486,7 +485,6 @@
         draw(); 
         console.log("g_drawing:",map);
         
-
         document.onkeydown=function(e){
             if(document.getElementById('more_window').style.display!="block"){
                 dir =(e?e:event).keyCode;
