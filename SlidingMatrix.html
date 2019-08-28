@@ -103,7 +103,7 @@
                 <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="import_steps(document.getElementById('Import-Steps').value);document.getElementById('more_window').style.display ='none';">Submit</button>
             </form>
             <span class="close" style="float:left;font-size:15px;font-weight:regular;color:#034D45;padding:20px 0 0 20px;" onclick="download('Steps', step_documents);">Download my solution</span>
-            <span class="close" style="font-size:20px;font-weight:regular;color:#034D45;padding:20px 20px 0 0;">Help</span>
+            <span class="close" style="font-size:20px;font-weight:regular;color:#034D45;padding:20px 20px 0 0;" onclick="location.href='https://eehyqx.github.io/SlidingMatrix/'">Help</span>
         </mydiv>
     </div>
     <mydiv id="main">
@@ -220,12 +220,33 @@
             }
         }
 
+        function is_steps_valid(step_line){
+            if(step_line.length%3!=0){
+                return false;
+            }
+            for(var m=0;m<step_line.length;m++){
+                if(typeof(step_line[m])!="number"){
+                    return false;
+                }
+                if(parseInt(step_line[m])!=step_line[m]){
+                    return false;
+                }
+            }
+            for(var m=0;m<step_line.length;m+=3){
+                if(!(step_line[m]<map_degree && step_line[m]>=0 && step_line[m+2]<map_degree && step_line[m+2]>=0 && (step_line[m+1]==0 || step_line[m+1]==1))){
+                    
+                    return false;
+                }
+            }
+            return true;
+        }
        
 
         function import_steps(steps){
+            steps=steps.split(',').map(Number);
+            if(is_steps_valid(steps)){
             core_position_tmp=core_position.slice();
             var i=0;
-            steps=steps.split(',').map(Number);
             while(i<steps.length){
                 var tmp=[steps[i],steps[i+1],steps[i+2]]
                 var j=0;
@@ -235,7 +256,10 @@
                 }
                 i+=3;
             }
-            core_position=core_position_tmp.slice();draw();
+            core_position=core_position_tmp.slice();draw();}
+            else{
+                alert('invalid input!');
+            }
         }
 
         function is_import_steps_valid(){
