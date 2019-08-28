@@ -186,16 +186,15 @@
         //Thirdly, the imported steps (must be valid?)
         
         function set_map_by_map(map){
-            
             core_position=[0,0];
-            var temp=map;
             map=map.split(',').map(Number);
             
             console.log("map=",map);
-            
+            var temp1=map_degree;
             map_degree = parseInt(Math.sqrt(map.length));
             if (map_degree%1!=0){
                 alert("imported map is not valid!");
+                map=temp1;
                 return;
             }
             for (var i=0;i<map_degree**2;i++){
@@ -204,12 +203,19 @@
                         return;
                     }
             }
+
+            var map_set=new Set(map);
+            if (map_set.size!=map_degree**2){
+                alert("imported map is not valid!");
+                return;
+            }
             canvas.style="display: block;border-radius: "+px_scale(10)+"px;background-color: #0E8F81;"
             canvas.width=px_scale(20)+px_scale(120)*map_degree;
             canvas.height=px_scale(20)+px_scale(120)*map_degree;
             step_documents=new Array();
             step_documents[0]=['num','row_or_col','times'];
             map=createmap(map_degree,true,set_map=map);
+            console.log("drawing map:", map);
             draw();
         }
 
@@ -447,9 +453,9 @@
         document.getElementById("title").style="font:bold "+String(parseInt(canvas.width/7))+"px Arial,Microsoft Yahei;color:#FFFFFF;"
         document.getElementById("gap").style="padding:"+String(parseInt(canvas.width/15))+"px 0 0 0;"
         map=createmap(map_degree);
-        if (map[0]!=0){
-            draw(); 
-        }
+        
+        draw(); 
+        console.log("g_drawing:",map);
         
 
         document.onkeydown=function(e){
