@@ -163,30 +163,14 @@
             step_documents=new Array();
             step_documents[0]=['num','row_or_col','times'];
             map=createmap(user_degree,is_randomlize);
-            if (is_degree_valid(user_degree))
-            {
-                draw();
-            }
+            drwa();
             
         }
         //add function is_degree_valid to normalize the input
-        function is_degree_valid(degree){
-            var ans=true;
-            if (Number(degree)==NaN){
-                map=0;
-                return false;
-            }
-            else{
-                map_degree=parseInt(Number(degree),10);
-                console.log(map_degree);
-            }
-            if (map_degree>10 || map_degree<1){
-                map=0;
-                return false;
-            }
-            return ans;
-        }
-
+        //to validate the input, we add a pull-down menu to normalize map degree
+        //Secondly, we examine the input map, if it is not valid, we do nothing
+        //Thirdly, the imported steps (must be valid?)
+      
         function set_map_by_map(map){
             core_position=[0,0];
             map=map.split(',').map(Number);
@@ -242,13 +226,12 @@
             core_position=core_position_tmp.slice();draw();
         }
 
+        function is_import_steps_valid(){
+            //yet to come
+        }
+
         function createmap(degree,is_randomlize=true,set_map=null){
             var map=new Array();
-            if (!is_degree_valid(degree)){
-                alert("map degree is not valid!");
-                map=0;
-                return map;
-            }
             if(set_map!=null){
                 temp=set_map
             }
@@ -272,10 +255,7 @@
                     console.log("re-create map");
                 }
             }
-            if (!is_map_valid(map,degree)){
-                alert("map is not valid!");
-                map=0;
-            }
+            
         
             return map;
         }
