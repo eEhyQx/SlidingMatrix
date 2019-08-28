@@ -165,6 +165,23 @@
             map=createmap(user_degree,is_randomlize);
             draw();
         }
+        //add function is_degree_valid to normalize the input
+        function is_degree_valid(degree){
+            ans=true;
+            if (Number(degree)==NaN){
+                console.log(typeof(degree),degree);
+                return false;
+            }
+            else{
+                console.log(typeof(degree),degree);
+                map_degree=Number(degree).parseInt();
+            }
+            if (map_degree>10 || map_degree<1){
+                console.log(typeof(degree),degree);
+                return false;
+            }
+            return ans;
+        }
 
         function set_map_by_map(map){
             core_position=[0,0];
@@ -177,6 +194,25 @@
             step_documents[0]=['num','row_or_col','times'];
             map=createmap(map_degree,true,set_map=map);
             draw();
+        }
+
+        //add a function to detect if the imported map is valid 
+        function is_map_valid(){
+            ans=true;
+            var temp_map=[];
+            var temp_set;
+            for (var i=0;i<map_degree**2;i++){
+                temp_map[i]=map[i/map_degree][i%map_degree];
+                if (temp_map[i]<0 || temp_map[i]>map_degree**2)
+                {
+                    return false;
+                }
+            }
+            temp_set=new Set(temp_map);
+            if (temp_set.length!=map_degree**2){
+                return false;
+            }
+            return ans;
         }
 
         function import_steps(steps){
@@ -220,6 +256,10 @@
                     console.log("re-create map");
                 }
             }
+            if (!(is_degree_valid(degree) && is_map_valid())){
+                alert("map is not valid!");
+            }
+
             return map;
         }
 
