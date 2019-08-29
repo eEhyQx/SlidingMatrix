@@ -11,11 +11,11 @@
 - [x] Import steps according to sequence 
 - [x] Download my solution
 - [ ] Help
-- [ ] Play Ground Mode
+- [x] PlayGround Mode
 - [ ] Get Battle-map
 - [ ] Upload solution
 - [ ] Score board
-- [ ] Battle Mode
+- [x] Battle Mode
 - [ ] Tips
 - [ ] Mobile Device Version
 
@@ -41,6 +41,18 @@ PlayGround Mode is a mode for training and testing. In this mode you can,
 - [ ] Create map by seed
 
 ![Play Ground Mode](./imgs/PlayGround_Mode.jpg)
+
+**Create map by degree**
+
+Select Map-degree from `2~15`, then click `SUBMIT` to generate ordered map, or `RANDOMIZE` for random one.
+
+**Set map by sequence**
+
+Enter a sequence like `1,2,3,4,5,6,7,8,9` to generate a map as you wish. The sequence should satisfied following conditions,
+
+1. Each number should be split by `,`.
+2. It should be a legal map, which means the sequence should have length of `n*n` and filled with number from `1 to n*n`.
+3. It needs to be able to be solved. We will help you confirm this based on the conclusions of paper in reference .
 
 ## Battle Mode
 
