@@ -93,14 +93,29 @@
                     <input id="Create-Map" type="text" style="color:#034D45">
                     <label style="color:#034D45;">Create-Map</label>
                 </div>
-                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="set_map_by_map(document.getElementById('Create-Map').value);document.getElementById('more_window').style.display ='none';">Submit</button>
+                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="set_map_by_map(document.getElementById('Create-Map').value);">Submit</button>
             </form>
             <form class="mui-form--inline" style="padding:20px 0 0 20px" onsubmit="return false;">
                 <div class="mui-textfield" >
                     <input id="Import-Steps" type="text" style="color:#034D45" placeholder="Enter steps you want.">
                     <label style="color:#034D45;">Import-Steps</label>
                 </div>
-                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="import_steps(document.getElementById('Import-Steps').value);document.getElementById('more_window').style.display ='none';">Submit</button>
+                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="import_steps(document.getElementById('Import-Steps').value);">Submit</button>
+            </form>
+            <span class="close" style="float:left;font-size:15px;font-weight:regular;color:#034D45;padding:20px 0 0 20px;" onclick="download('Steps', step_documents);">Download my solution</span>
+            <span class="close" style="font-size:20px;font-weight:regular;color:#034D45;padding:20px 20px 0 0;" onclick="location.href='https://eehyqx.github.io/SlidingMatrix/'">Help</span>
+        </mydiv>
+    </div>
+    <div id="more_window_battle" class="modal">
+        <mydiv class="modal-content">
+            <span class="close" style="padding:0 20px 0 0" onclick="document.getElementById('more_window_battle').style.display = 'none';">&times;</span>
+            <p style="font:bold 60px Microsoft Yahei,Arial;color:#FFFFFF;padding:8px 0 0 20px">Battle Mode</p>
+            <form class="mui-form--inline" style="padding:20px 0 0 20px" onsubmit="return false;">
+                <div class="mui-textfield" >
+                    <input id="Import-Steps-battle" type="text" style="color:#034D45" placeholder="Enter steps you want.">
+                    <label style="color:#034D45;">Import-Steps</label>
+                </div>
+                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="import_steps(document.getElementById('Import-Steps-battle').value);">Submit</button>
             </form>
             <span class="close" style="float:left;font-size:15px;font-weight:regular;color:#034D45;padding:20px 0 0 20px;" onclick="download('Steps', step_documents);">Download my solution</span>
             <span class="close" style="font-size:20px;font-weight:regular;color:#034D45;padding:20px 20px 0 0;" onclick="location.href='https://eehyqx.github.io/SlidingMatrix/'">Help</span>
@@ -119,11 +134,12 @@
         var map_degree=4;
         var map;
         var offsetx = {1:53,2:34,3:28,4:25};
-        var keycom = {'87':[-1,0],'83':[1,0],'65':[0,-1],'68':[0,1],'74':[0,true,0],'75':[0,false,1],'76':[0,false,0],'73':[0,true,1],'79':"go_back"}; 
+        var keycom = {'87':[-1,0],'83':[1,0],'65':[0,-1],'68':[0,1],'74':[0,true,0],'75':[0,false,1],'76':[0,false,0],'73':[0,true,1],'79':"go_back",'85':"battle_mod"}; 
         //up,down,left,right,j,k,l
         //add row and colomn move
         var row_move=0;
         var col_move=0;
+        var battle_mod=false;
         
         var default_color="#8AD9D0";
         var core_color="#FFFFFF";
@@ -133,6 +149,11 @@
         step_documents[0]=['num','row_or_col','times'];
         var screen_Width=window.screen.width;
         var screen_Height=window.screen.height;
+
+        var map_backup=new Array();
+        map_backup=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
+        var step_documents_backup=new Array();
+        step_documents_backup[0]=['num','row_or_col','times'];     
         
         function download(filename, text) {
           var element = document.createElement('a');
@@ -149,9 +170,14 @@
 
 
         function more_window(){
-            document.getElementById('Map-degree').value=String(map_degree);
-            document.getElementById('Create-Map').value=String(map);
-            document.getElementById('more_window').style.display='block';
+            if(battle_mod){
+                document.getElementById('more_window_battle').style.display='block';
+            }
+            else{
+                document.getElementById('Map-degree').value=String(map_degree);
+                document.getElementById('Create-Map').value=String(map);
+                document.getElementById('more_window').style.display='block';
+            }
         }
 
         function px_scale(px_num){
@@ -190,7 +216,7 @@
             tmp_map1=my_map.slice();
             tmp_map2=my_map.slice();
             var tmp=new Array();
-            for(var j=0;j<parseInt(Math.sqrt(my_map.length))*parseInt(Math.sqrt(my_map.length));j++){
+            for(var j=0;j<parseInt(Math.sqrt(tmp_map1.length))*parseInt(Math.sqrt(tmp_map1.length));j++){
                 tmp[j]=j+1;
             }
             if(tmp_map2.sort().toString()!=tmp.sort().toString()){
@@ -202,17 +228,18 @@
             return ans;
         }
 
-        function set_map_by_map(my_map){
+        function set_map_by_map(y_map,is_string=true){
             core_position=[0,0];
-            my_map=my_map.split(',').map(Number);
-            if(is_map_valid(my_map)){
-                map_degree = parseInt(Math.sqrt(my_map.length));
+            if(is_string){y_map=y_map.split(',').map(Number);}
+            if(is_map_valid(y_map)){
+                document.getElementById('more_window').style.display = 'none';
+                map_degree = parseInt(Math.sqrt(y_map.length));
                 canvas.style="display: block;border-radius: "+px_scale(10)+"px;background-color: #0E8F81;"
                 canvas.width=px_scale(20)+px_scale(120)*map_degree;
                 canvas.height=px_scale(20)+px_scale(120)*map_degree;
                 step_documents=new Array();
                 step_documents[0]=['num','row_or_col','times'];
-                map=createmap(map_degree,true,set_map=my_map);
+                map=createmap(map_degree,true,set_map=y_map);
                 draw();
             }
             else{
@@ -234,7 +261,6 @@
             }
             for(var m=0;m<step_line.length;m+=3){
                 if(!(step_line[m]<map_degree && step_line[m]>=0 && step_line[m+2]<map_degree && step_line[m+2]>=0 && (step_line[m+1]==0 || step_line[m+1]==1))){
-                    
                     return false;
                 }
             }
@@ -245,27 +271,34 @@
         function import_steps(steps){
             steps=steps.split(',').map(Number);
             if(is_steps_valid(steps)){
-            core_position_tmp=core_position.slice();
-            console.log("core pos temp:",core_position_tmp);
-            var i=0;
-            while(i<steps.length){
-                var tmp=[steps[i],steps[i+1],steps[i+2]]
-                var j=0;
-                while(j<tmp[2]){
-                    move(tmp[0],tmp[1],false,true);
-                    j++;
+                if(battle_mod){
+                    document.getElementById('more_window_battle').style.display = 'none';
+                    document.getElementById('Import-Steps-battle').value=""
                 }
-                i+=3;
+                else{
+                    document.getElementById('more_window').style.display = 'none';
+                    document.getElementById('Import-Steps').value=""
+                }
+                core_position_tmp=core_position.slice();
+                console.log("core pos temp:",core_position_tmp);
+                var i=0;
+                while(i<steps.length){
+                    var tmp=[steps[i],steps[i+1],steps[i+2]];
+                    var j=0;
+                    while(j<tmp[2]){
+                        move(tmp[0],tmp[1],false,true);
+                        j++;
+                    }
+                    i+=3;
+                }
+                core_position=core_position_tmp.slice();
+                draw();
             }
-            core_position=core_position_tmp.slice();draw();}
             else{
                 alert('invalid input!');
             }
         }
 
-        function is_import_steps_valid(){
-            //yet to come
-        }
 
         function createmap(degree,is_randomlize=true,set_map=null){
             var map=new Array();
@@ -289,7 +322,6 @@
             if(is_randomlize){
                 while (!has_solution(map)){
                     map=createmap(degree);
-                    console.log("re-create map");
                 }
             }
             return map;
@@ -310,8 +342,14 @@
                     ctx.fillText(String(num),j*px_scale(120)+px_scale(offsetx[String(num).length]),i*px_scale(120)+px_scale(70)+px_scale(default_num_size[String(num).length]/3));
                     console.log('step_documents: '+String(step_documents));
                 });
-            document.getElementById("steps").style="font: "+String(parseInt(canvas.width/15))+"px Arial,Microsoft Yahei;color:#FFFFFF"
-            document.getElementById("steps").innerText="Steps: "+String(step_documents.length-1);
+            if(battle_mod){
+                document.getElementById("steps").style="font: "+String(parseInt(canvas.width/15))+"px Arial,Microsoft Yahei;color:#034D45"
+                document.getElementById("steps").innerText="Battle Mode | Steps: "+String(step_documents.length-1);
+            }
+            else{
+                document.getElementById("steps").style="font: "+String(parseInt(canvas.width/15))+"px Arial,Microsoft Yahei;color:#FFFFFF"
+                document.getElementById("steps").innerText="PlayGround | Steps: "+String(step_documents.length-1);
+            }
         }
 
         function formap(func){
@@ -404,6 +442,24 @@
                    setTimeout("tmp=core_color;core_color=default_color;default_color=tmp;draw();","100");
                    return null;
                 }
+                else if(keycom[input]=="battle_mod"){
+                    tmp=core_color;core_color=default_color;default_color=tmp;draw();
+                    tmp=map.slice().reduce(function (a, b) { return a.concat(b)});
+                    tmp1=step_documents.slice();
+                    set_map_by_map(map_backup,false);
+                    map_backup=tmp.slice();
+                    step_documents=step_documents_backup.slice();
+                    step_documents_backup=tmp1.slice();
+                    if(battle_mod){
+                        document.body.style="background-color: #034D45;display:flex;"
+                        document.getElementById('title').style="font:bold 70px Arial,Microsoft Yahei;color:#FFFFFF;";
+                    }
+                    else{
+                        document.body.style="background-color: #FFFFFF;display:flex;"
+                        document.getElementById('title').style="font:bold 70px Arial,Microsoft Yahei;color:#034D45;";
+                    }
+                    battle_mod=!battle_mod;
+                }
                 else if(keycom[input].length==3){
                     command=[keycom[input][2],keycom[input][1]];
                     return command;
@@ -486,7 +542,7 @@
         console.log("g_drawing:",map);
         
         document.onkeydown=function(e){
-            if(document.getElementById('more_window').style.display!="block"){
+            if(document.getElementById('more_window').style.display!="block" && document.getElementById('more_window_battle').style.display!="block"){
                 dir =(e?e:event).keyCode;
                 cmd=core_location(dir);
                 if (cmd!=null){
