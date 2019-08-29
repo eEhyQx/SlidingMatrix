@@ -150,11 +150,15 @@
         var screen_Width=window.screen.width;
         var screen_Height=window.screen.height;
 
-        var map_backup=new Array();
-        map_backup=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
         var step_documents_backup=new Array();
         step_documents_backup[0]=['num','row_or_col','times'];     
         
+        var map_backup=new Array();
+        map_backup=load("battle_mode.txt").split(',').map(Number);       
+        function load(name) {
+
+        }
+
         function download(filename, text) {
           var element = document.createElement('a');
           element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
