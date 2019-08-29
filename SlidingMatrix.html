@@ -152,9 +152,11 @@
 
         var step_documents_backup=new Array();
         step_documents_backup[0]=['num','row_or_col','times'];     
-        
+
         var map_backup=new Array();
-        map_backup=load("battle_mode.txt").split(',').map(Number);       
+        //map_backup=load("battle_mode.txt").split(',').map(Number);       
+        map_backup=[1,2,3,4,5,6,9,7,8]
+
         function load(name) {
 
         }
@@ -227,6 +229,7 @@
                 ans=false;
             }
             else if(!has_solution(my_map,true)){
+                console.log("GGGGG")
                 ans=false;
             }
             return ans;
@@ -489,7 +492,8 @@
         }
 
         function has_solution(state,is_line=false){
-            if(map_degree%2==0){
+            console.log(parseInt(Math.sqrt(state.length))%2)
+            if((is_line && parseInt(Math.sqrt(state.length))%2==0) || (!is_line && state.length%2==0)){
                 return true;
             }
             var s=1;
@@ -499,7 +503,7 @@
             else{
                 var state_p=state.slice();
             }
-            var len=map_degree*map_degree;
+            var len=(parseInt(Math.sqrt(state.length))%2)*(parseInt(Math.sqrt(state.length))%2);
             for(m=0;m<len;m++){
                 for(n=0;n<len;n++){
                     if(m>n){
