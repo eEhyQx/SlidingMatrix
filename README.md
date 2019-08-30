@@ -77,7 +77,7 @@ When click `U` switch to the `Battle Mode`, the color of the scenery will be rev
 
 Enter a sequence of steps to transform the map. The sequence should formed like the following case.
 
- ![Play Ground Mode](E:/360data/OneDrive%20-%20shanghaitech.edu.cn/0_2019/SlidingMatrix/imgs/importsteps.png)
+ ![Play Ground Mode](./imgs/importsteps.png)
 
 **Download my solution**
 
