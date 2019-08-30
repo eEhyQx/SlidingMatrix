@@ -267,7 +267,7 @@
                 }
             }
             for(var m=0;m<step_line.length;m+=3){
-                if(!(step_line[m]<map_degree && step_line[m]>=0 && step_line[m+2]<map_degree && step_line[m+2]>=0 && (step_line[m+1]==0 || step_line[m+1]==1))){
+                if(!(step_line[m]<map_degree && step_line[m]>=0 && step_line[m+2]>0 && (step_line[m+1]==0 || step_line[m+1]==1))){
                     return false;
                 }
             }

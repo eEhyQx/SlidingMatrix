@@ -25,7 +25,7 @@ Sliding Matrix is a game designed by Qixuan Zhang, Zihan Jia and Yuming Xiang, w
 
 ##  How to play?
 
-A Sliding Matrix is a square with `n*n` blocks filled with misplaced integer from `1` to `n*n`. Select a `row`(or `col`) by move the Cursor through `W(up)-A(left)-S(down)-D(right)`.  Then click `I(up)-J(left)-K(down)-L(right)` to 'swipe' the `row`(or `col`). Click `O` to undo the previous step.
+A Sliding Matrix is a square with `n*n` blocks filled with misplaced integer from `1` to `n*n`. Select a `row`(or `col`) by move the Cursor through `W(up)-A(left)-S(down)-D(right)`.  Then click `I(up)-J(left)-K(down)-L(right)` to 'swipe' the `row`(or `col`). Click `O` to undo the previous step. Click `U` to switch to `Battle Mode`.
 
 Solve the sliding Matrix by transform it to ordered integer `1~n*n`.
 
@@ -54,7 +54,34 @@ Enter a sequence like `1,2,3,4,5,6,7,8,9` to generate a map as you wish. The seq
 2. It should be a legal map, which means the sequence should have length of `n*n` and filled with number from `1 to n*n`.
 3. It needs to be able to be solved. We will help you confirm this based on the conclusions of paper in reference .
 
+**Import steps**
+
+Enter a sequence of steps to transform the map. The sequence should formed like the following case.
+
+ ![Play Ground Mode](./imgs/importsteps.png)
+
+**Download my solution**
+
+Save the steps you entered so far as a `.txt` file, and download it. The steps are stored with the same format  of Inputs of **Import steps**.
+
 ## Battle Mode
+
+When click `U` switch to the `Battle Mode`, the color of the scenery will be reversed. `Battle Mode` and `PlayGround Mode` are parallel, they don't share the map or step_documents, you can switch between them by clicking `U` any time you want.  In this mode you can,
+
+- [x] Import steps according to sequence
+- [ ] Check global score board
+- [ ] Upload my solution
+- [x] Download my solution
+
+**Import steps**
+
+Enter a sequence of steps to transform the map. The sequence should formed like the following case.
+
+ ![Play Ground Mode](E:/360data/OneDrive%20-%20shanghaitech.edu.cn/0_2019/SlidingMatrix/imgs/importsteps.png)
+
+**Download my solution**
+
+Save the steps you entered so far as a `.txt` file, and download it. The steps are stored with the same format  of Inputs of **Import steps**.
 
 ## Reference
 
