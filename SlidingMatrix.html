@@ -154,24 +154,42 @@
         step_documents_backup[0]=['num','row_or_col','times'];     
 
         var map_backup=new Array();
-        //map_backup=load("battle_mode.txt").split(',').map(Number);       
-        map_backup=[1,2,3,4,5,6,9,7,8]
+        //map_backup=load("https://eehyqx.github.io/SlidingMatrix/battle_mode.txt").split(',').map(Number);       
+        //map_backup=[1,2,3,4,5,6,9,7,8]
+        
+        console.log(map_backup);
 
-        function load(name) {
+        
 
+        function load(url) {
+           var ajax=new XMLHttpRequest();
+           ajax.open("GET",url,true);
+           ajax.onreadystatechange=function(){
+            if (xhr.readyState === 4){
+                if (xhr.status === 200){
+                    console.log(xhr.responseText);
+            }   
+            else {
+                console.error(xhr.statusText);
+            }
+            }
+           };
+
+           console.log(ajax);
         }
 
+        
         function download(filename, text) {
-          var element = document.createElement('a');
-          element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-          element.setAttribute('download', filename);
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
 
-          element.style.display = 'none';
-          document.body.appendChild(element);
+            element.style.display = 'none';
+            document.body.appendChild(element);
 
-          element.click();
+            element.click();
 
-          document.body.removeChild(element);
+            document.body.removeChild(element);
         }
 
 
