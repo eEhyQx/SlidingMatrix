@@ -153,29 +153,48 @@
         var step_documents_backup=new Array();
         step_documents_backup[0]=['num','row_or_col','times'];     
 
-        var map_backup=new Array();
+        var map_backup=new String();//=new Array();
         //map_backup=load("https://eehyqx.github.io/SlidingMatrix/battle_mode.txt").split(',').map(Number);       
         //map_backup=[1,2,3,4,5,6,9,7,8]
         
-        console.log(map_backup);
+        map_backup=load("https://eehyqx.github.io/SlidingMatrix/battle_mode.txt");//.split(',').map(Number);
 
+        console.log(map_backup);
+        console.log(typeof(String("acad;ask;")));
         
 
         function load(url) {
-           var ajax=new XMLHttpRequest();
-           ajax.open("GET",url,true);
-           ajax.onreadystatechange=function(){
-            if (xhr.readyState === 4){
-                if (xhr.status === 200){
-                    console.log(xhr.responseText);
-            }   
-            else {
-                console.error(xhr.statusText);
-            }
-            }
-           };
+            var xhr=new XMLHttpRequest();
+            xhr.responseType="text";
+            xhr.open("GET",url,true);
+            var result=new String();
+            xhr.onreadystatechange=changestate;
+            function changestate(){
+                if (xhr.readyState == 4){
+                    if (xhr.status == 200){
+                        
+                        str=xhr.response;
+                        console.log("status=200,content="+str);
+                        str=new String(str);
+                        map_backup=str;
+                        result=str;
+                        console.log(typeof(map_backup),"returing map_backup:",map_backup);
+                        return str;
+                    }       
+                    else {
+                        console.error("status!=200"+xhr.statusText);
+                    }
+                }
+            };
 
-           console.log(ajax);
+            xhr.onerror=function(e){
+                console.error(xhr.statusText);
+            };
+
+            xhr.send(null);
+           
+           console.log(xhr,xhr.readyState,result);
+           return result;
         }
 
         
