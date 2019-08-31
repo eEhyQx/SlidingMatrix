@@ -128,6 +128,7 @@
         <center id="gap"></center>
         <center><button id="more" class="mui-btn mui-btn--fab" style="background-color:#0E8F81;font:bold 20px Microsoft Yahei,Arial;color:#034D45" onclick="more_window()">···</button></center>
     </mydiv>
+    <script src="./js/jquery-1.11.1.min.js"></script>
     <script>
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext('2d');
@@ -153,49 +154,18 @@
         var step_documents_backup=new Array();
         step_documents_backup[0]=['num','row_or_col','times'];     
 
-        var map_backup=new String();//=new Array();
-        //map_backup=load("https://eehyqx.github.io/SlidingMatrix/battle_mode.txt").split(',').map(Number);       
-        //map_backup=[1,2,3,4,5,6,9,7,8]
-        
-        map_backup=load("https://eehyqx.github.io/SlidingMatrix/battle_mode.txt");//.split(',').map(Number);
-
-        console.log(map_backup);
-        console.log(typeof(String("acad;ask;")));
+        var map_backup=new Array();
+        load("https://eehyqx.github.io/SlidingMatrix/battle_mode.txt");
         
 
         function load(url) {
-            var xhr=new XMLHttpRequest();
-            xhr.responseType="text";
-            xhr.open("GET",url,true);
-            var result=new String();
-            xhr.onreadystatechange=changestate;
-            function changestate(){
-                if (xhr.readyState == 4){
-                    if (xhr.status == 200){
-                        
-                        str=xhr.response;
-                        console.log("status=200,content="+str);
-                        str=new String(str);
-                        map_backup=str;
-                        result=str;
-                        console.log(typeof(map_backup),"returing map_backup:",map_backup);
-                        return str;
-                    }       
-                    else {
-                        console.error("status!=200"+xhr.statusText);
-                    }
-                }
-            };
-
-            xhr.onerror=function(e){
-                console.error(xhr.statusText);
-            };
-
-            xhr.send(null);
-           
-           console.log(xhr,xhr.readyState,result);
-           return result;
+            $.get(url,function(data,status){
+                map_backup=data.split(',').map(Number);
+                console.log(data)
+            });
         }
+
+        
 
         
         function download(filename, text) {
