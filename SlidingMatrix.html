@@ -156,6 +156,7 @@
 
         var map_backup=new Array();
         load("https://eehyqx.github.io/SlidingMatrix/battle_mode.txt");
+        //map_backup=[1,2,3,4,5,6,8,9,7]
         
 
         function load(url) {
@@ -225,6 +226,7 @@
         //Thirdly, the imported steps (must be valid?)
         
         function is_map_valid(my_map){
+            console.log(my_map.length);
             var ans=true;
             tmp_map1=my_map.slice();
             tmp_map2=my_map.slice();
@@ -236,7 +238,6 @@
                 ans=false;
             }
             else if(!has_solution(my_map,true)){
-                console.log("GGGGG")
                 ans=false;
             }
             return ans;
@@ -245,7 +246,7 @@
         function set_map_by_map(y_map,is_string=true){
             core_position=[0,0];
             if(is_string){y_map=y_map.split(',').map(Number);}
-            if(is_map_valid(y_map)){
+            if(is_map_valid(y_map.slice())){
                 document.getElementById('more_window').style.display = 'none';
                 map_degree = parseInt(Math.sqrt(y_map.length));
                 canvas.style="display: block;border-radius: "+px_scale(10)+"px;background-color: #0E8F81;"
@@ -334,7 +335,7 @@
                 }
             }
             if(is_randomlize){
-                while (!has_solution(map)){
+                while (!has_solution(map,false)){
                     map=createmap(degree);
                 }
             }
@@ -498,8 +499,7 @@
             return ans;
         }
 
-        function has_solution(state,is_line=false){
-            console.log(parseInt(Math.sqrt(state.length))%2)
+        function has_solution(state,is_line){
             if((is_line && parseInt(Math.sqrt(state.length))%2==0) || (!is_line && state.length%2==0)){
                 return true;
             }
@@ -510,7 +510,7 @@
             else{
                 var state_p=state.slice();
             }
-            var len=(parseInt(Math.sqrt(state.length))%2)*(parseInt(Math.sqrt(state.length))%2);
+            var len=(parseInt(Math.sqrt(state.length)))*(parseInt(Math.sqrt(state.length)));
             for(m=0;m<len;m++){
                 for(n=0;n<len;n++){
                     if(m>n){
