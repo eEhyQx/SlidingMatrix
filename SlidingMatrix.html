@@ -121,6 +121,22 @@
             <span class="close" style="font-size:20px;font-weight:regular;color:#034D45;padding:20px 20px 0 0;" onclick="location.href='https://eehyqx.github.io/SlidingMatrix/'">Help</span>
         </mydiv>
     </div>
+        <div id="solved_window_battle" class="modal">
+        <mydiv class="modal-content">
+            <span class="close" style="padding:0 20px 0 0" onclick="document.getElementById('more_window_battle').style.display = 'none';">&times;</span>
+            <p style="font:bold 60px Microsoft Yahei,Arial;color:#FFFFFF;padding:8px 0 0 20px">Congratulations!</p>
+            <p style="font:bold 20px Microsoft Yahei,Arial;color:#FFFFFF;padding:8px 0 0 20px">Congratulations!</p>
+            <form class="mui-form--inline" style="padding:20px 0 0 20px" onsubmit="return false;">
+                <div class="mui-textfield" >
+                    <input id="Import-Steps-battle" type="text" style="color:#034D45" placeholder="Enter your ID.">
+                    <label style="color:#034D45;">ID</label>
+                </div>
+                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="import_steps(document.getElementById('Import-Steps-battle').value);">Upload solution</button>
+            </form>
+            <span class="close" style="float:left;font-size:15px;font-weight:regular;color:#034D45;padding:20px 0 0 20px;" onclick="download('Steps', step_documents);">Download my solution</span>
+            <span class="close" style="font-size:20px;font-weight:regular;color:#034D45;padding:20px 20px 0 0;" onclick="location.href='https://eehyqx.github.io/SlidingMatrix/'">Help</span>
+        </mydiv>
+    </div>
     <mydiv id="main">
         <center id="title" style="font:bold 70px Arial,Microsoft Yahei;color:#FFFFFF;">Sliding Matrix</center><br/>
         <center id="steps" style="font:regular 25px Arial,Microsoft Yahei;color:#FFFFFF">steps:</center><br/>

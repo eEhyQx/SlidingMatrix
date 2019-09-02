@@ -10,11 +10,11 @@
 - [x] Set map by sequence
 - [x] Import steps according to sequence 
 - [x] Download my solution
-- [ ] Help
+- [x] Help
 - [ ] Create a map by seed
 - [x] PlayGround Mode
-- [ ] Get Battle-map
-- [ ] Upload solution
+- [x] Get Battle-map
+- [x] Upload solution
 - [ ] Score board
 - [x] Battle Mode
 - [ ] Tips
