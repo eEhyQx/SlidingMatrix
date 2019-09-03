@@ -29,7 +29,7 @@ Sliding Matrix is a game designed by Qixuan Zhang, Zihan Jia, and Yuming Xiang, 
 
 A Sliding Matrix is a square with `n*n` blocks filled with misplaced integers from `1` to `n*n`. Select a `row`(or `col`) by move the Cursor through `W(up)-A(left)-S(down)-D(right)`.  Then click `I(up)-J(left)-K(down)-L(right)` to 'swipe' the `row`(or `col`). Click `O` to undo the previous step. Click `U` to switch to `Battle Mode`.
 
-Solve the sliding Matrix by transforming it to ordered integer `1~n*n`.
+Solve the sliding Matrix by transforming it to ordered integers $1$~$n^2$.
 
 ![map_guide](./imgs/map_guide.png)
 
