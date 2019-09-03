@@ -123,15 +123,15 @@
     </div>
         <div id="solved_window_battle" class="modal">
         <mydiv class="modal-content">
-            <span class="close" style="padding:0 20px 0 0" onclick="document.getElementById('more_window_battle').style.display = 'none';">&times;</span>
+            <span class="close" style="padding:0 20px 0 0" onclick="document.getElementById('solved_window_battle').style.display = 'none';">&times;</span>
             <p style="font:bold 60px Microsoft Yahei,Arial;color:#FFFFFF;padding:8px 0 0 20px">Congratulations!</p>
-            <p style="font:bold 20px Microsoft Yahei,Arial;color:#FFFFFF;padding:8px 0 0 20px">Congratulations!</p>
+            <p style="font:regular 14px Microsoft Yahei,Arial;color:#034D45;padding:8px 0 0 20px">You did it! Upload your solution and let the world know.</p>
             <form class="mui-form--inline" style="padding:20px 0 0 20px" onsubmit="return false;">
                 <div class="mui-textfield" >
-                    <input id="Import-Steps-battle" type="text" style="color:#034D45" placeholder="Enter your ID.">
+                    <input id="Upload-Steps-battle" type="text" style="color:#034D45" placeholder="Enter your ID.">
                     <label style="color:#034D45;">ID</label>
                 </div>
-                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="import_steps(document.getElementById('Import-Steps-battle').value);">Upload solution</button>
+                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="upload(document.getElementById('Upload-Steps-battle').value,step_documents);">Upload solution</button>
             </form>
             <span class="close" style="float:left;font-size:15px;font-weight:regular;color:#034D45;padding:20px 0 0 20px;" onclick="download('Steps', step_documents);">Download my solution</span>
             <span class="close" style="font-size:20px;font-weight:regular;color:#034D45;padding:20px 20px 0 0;" onclick="location.href='https://eehyqx.github.io/SlidingMatrix/'">Help</span>
@@ -144,6 +144,45 @@
         <center id="gap"></center>
         <center><button id="more" class="mui-btn mui-btn--fab" style="background-color:#0E8F81;font:bold 20px Microsoft Yahei,Arial;color:#034D45" onclick="more_window()">···</button></center>
     </mydiv>
+    <div id="more_window_finished" class="modal">
+        <mydiv class="modal-content">
+            <span class="close" style="padding:0 20px 0 0" onclick="document.getElementById('more_window_finished').style.display = 'none';">&times;</span>
+            <p style="font:bold 60px Microsoft Yahei,Arial;color:#FFFFFF;padding:8px 0 0 20px">Congratulations!</p>
+            <p style="font:regular 14px Microsoft Yahei,Arial;color:#034D45;padding:8px 0 0 20px">You did it! Now try again or click U switch to Battle Mode.</p>
+            <form class="mui-form--inline" style="padding:20px 0 0 20px" onsubmit="return false;">
+                <div class="mui-select" >
+                    <select id="Map-degree_finished" style="color:#034D45;width:195px">
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                    </select>
+                    <label style="color:#034D45;">Map-degree</label>
+                </div>
+                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="set_map_by_degree(degree=Number(document.getElementById('Map-degree_finished').value),false);document.getElementById('more_window_finished').style.display = 'none';">Submit</button>
+                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="set_map_by_degree(degree=Number(document.getElementById('Map-degree_finished').value),true);document.getElementById('more_window_finished').style.display = 'none';">Randomize</button>
+            </form>
+            <form class="mui-form--inline" style="padding:20px 0 0 20px" onsubmit="return false;">
+                <div class="mui-textfield" >
+                    <input id="Create-Map_finish" type="text" style="color:#034D45">
+                    <label style="color:#034D45;">Create-Map</label>
+                </div>
+                <button class="mui-btn" style="transform: translate(50%, 0);background-color:#8AD9D0;color:#034D45;border-radius: 5px;" onclick="set_map_by_map(document.getElementById('Create-Map_finish').value);">Submit</button>
+            </form>
+            <span class="close" style="float:left;font-size:15px;font-weight:regular;color:#034D45;padding:20px 0 0 20px;" onclick="download('Steps', step_documents);">Download my solution</span>
+            <span class="close" style="font-size:20px;font-weight:regular;color:#034D45;padding:20px 20px 0 0;" onclick="location.href='https://eehyqx.github.io/SlidingMatrix/'">Help</span>
+        </mydiv>
+
     <script src="./js/jquery-1.11.1.min.js"></script>
     <script>
         var canvas = document.getElementById("canvas");
@@ -171,8 +210,8 @@
         step_documents_backup[0]=['num','row_or_col','times'];     
 
         var map_backup=new Array();
-        load("https://eehyqx.github.io/SlidingMatrix/battle_mode.txt");
-        //map_backup=[1,2,3,4,5,6,8,9,7]
+        //load("https://eehyqx.github.io/SlidingMatrix/battle_mode.txt");
+        map_backup=[1,2,3,4,5,6,8,9,7]
         
 
         function load(url) {
@@ -183,7 +222,22 @@
         }
 
 
-
+        function upload(id,id_steps){
+            $.get("http://slidingmatrix.geefunlab.com/upload/"+id+"/"+id_steps.slice(1),function(data,status){
+                console.log(data)
+                if(data=="true"){
+                    alert("Successed!")
+                    document.getElementById('solved_window_battle').style.display ="none"
+                }
+                else if(data=="Wrong solution"){
+                    alert("The solution is not correct!")
+                }
+                else{
+                    alert("Error! Try again later!")
+                }
+            });           
+        }
+        
         
         function download(filename, text) {
             var element = document.createElement('a');
@@ -579,7 +633,12 @@
                 if (cmd!=null){
                     move(core_position[cmd[0]],cmd[0],cmd[1]);
                     if (is_neat()){
-                        setTimeout('alert("You win!");',String(50+2*map_degree))
+                        if(battle_mod){
+                            document.getElementById('solved_window_battle').style.display="block"
+                        }
+                        else{
+                            document.getElementById('more_window_finished').style.display = "block"
+                        }
                     }
                 }
                 draw();
