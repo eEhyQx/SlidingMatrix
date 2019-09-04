@@ -223,7 +223,7 @@
 
 
         function upload(id,id_steps){
-            $.get("http://slidingmatrix.geefunlab.com/upload/"+id+"/"+id_steps.slice(1),function(data,status){
+            $.get("https://slidingmatrix.geefunlab.com/upload/"+id+"/"+id_steps.slice(1),function(data,status){
                 console.log(data)
                 if(data=="true"){
                     alert("Successed!")
@@ -580,7 +580,7 @@
             else{
                 var state_p=state.slice();
             }
-            var len=(parseInt(Math.sqrt(state.length)))*(parseInt(Math.sqrt(state.length)));
+            var len=(parseInt(Math.sqrt(state_p.length)))*(parseInt(Math.sqrt(state_p.length)));
             for(m=0;m<len;m++){
                 for(n=0;n<len;n++){
                     if(m>n){
@@ -588,6 +588,7 @@
                     }
                 }
             }
+            console.log(state_p)
             return s>0;            
         }
 
