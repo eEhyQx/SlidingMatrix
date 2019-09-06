@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sliding Matrix</title>
+    <style>
+        canvas{
+            display: block;
+            margin: 0 auto;
+            border-radius: 10px;
+            background-color: #0E8F81;
+        }
+        button {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+        }
+        mydiv{
+            position: absolute;
+            left:50%;
+            top:50%;
+            transform: translate(-50%, -50%);
+        }
+        .modal {
+            position: absolute;
+            z-index:1;
+            left:50%;
+            top:50%;
+            transform: translate(-50%, -50%);
+            display: none; /* 默认隐藏 */
+            width: 100%; 
+            height: 100%;
+            background-color: rgba(0,0,0,0.4); 
+        }
+
+        /* 弹窗内容 */
+        .modal-content {
+            background-color: #0E8F81;
+            margin: 0 auto; 
+            padding: 10px;
+            width: 60%;
+        }
+
+        /* 关闭按钮 */
+        .close {
+            color: white;
+            float: right;
+            font-size: 50px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/mui.css" />
+    <script src="./js/mui.js"></script>
+</head>
+<body style="background-color: #034D45;display:block;">
+    <div id="main">
+        <center id="title" style="font:bold 70px Arial,Microsoft Yahei;color:#FFFFFF;">Score Board</center><br/>
+        <center id="steps" style="font:30px Microsoft Yahei,Arial;color:#FFFFFF">Sliding Matrix</center><br/>
+        <table class="mui-table mui-table--bordered">
+            <thead>
+              <tr>
+                <th>Column 1</th>
+                <th>Column 2</th>
+                <th>Column 2</th>
+                <th>Column 2</th>
+                <th>Column 2</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Cell 1-1sdasdsadsadasdsadsa</td>
+                <td>Cell 1-2sadasdsadsadsad</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+              <tr>
+                <td>Cell 2-1adsadsadsa</td>
+                <td>Cell 2-2adsadsadasd</td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+        
