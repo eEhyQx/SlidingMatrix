@@ -628,7 +628,7 @@
         console.log("g_drawing:",map);
         
         document.onkeydown=function(e){
-            if(document.getElementById('more_window').style.display!="block" && document.getElementById('more_window_battle').style.display!="block"){
+            if(document.getElementById('more_window').style.display!="block" && document.getElementById('more_window_battle').style.display!="block" && document.getElementById('solved_window_battle').style.display!="block" && document.getElementById('more_window_finished').style.display!="block"){
                 dir =(e?e:event).keyCode;
                 cmd=core_location(dir);
                 if (cmd!=null){
