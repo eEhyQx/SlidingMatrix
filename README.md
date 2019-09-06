@@ -1,6 +1,6 @@
 # Sliding Matrix
 
-**Authors: [eEhyQx](https://github.com/eEhyQx), [greatoyster](https://github.com/greatoyster) .**
+**Authors: [eEhyQx](https://github.com/eEhyQx), [greatoyster](https://github.com/greatoyster),  [cykenjay](cykenjay@gmail.com).**
 
 - [x] Basic rules
 - [x] GUI
@@ -15,7 +15,7 @@
 - [x] PlayGround Mode
 - [x] Get Battle-map
 - [x] Upload solution
-- [ ] Score board
+- [x] Score board
 - [x] Battle Mode
 - [ ] Tips
 - [ ] Mobile Device Version
@@ -73,8 +73,8 @@ Save the steps you entered so far as a `.txt` file, and download it. The steps a
 Battle Mode will show the map that posted on our GitHub repo, which will automatically be generated randomly every week by the backend.  Players should solve it through the minimal steps and upload it. After checking it will be shown on the global Score board. In this mode you can,
 
 - [x] Import steps according to sequence
-- [ ] Check global Score board
-- [ ] Upload my solution
+- [x] Check global Score board
+- [x] Upload my solution
 - [x] Download my solution
 
 When clicking `U` switch to the `Battle Mode`, the color of the scenery will be reversed. `Battle Mode` and `PlayGround Mode` are parallel, they don't share the map or step_documents, you can switch between them by clicking `U` any time you want.

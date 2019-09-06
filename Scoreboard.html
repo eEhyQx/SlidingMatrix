@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sliding Matrix</title>
+    <title>Sliding Matrix-Score Board</title>
     <style>
         canvas{
             display: block;
@@ -62,106 +62,96 @@
 </head>
 <body style="background-color: #034D45;display:block;">
     <div id="main">
-        <center id="title" style="font:bold 70px Arial,Microsoft Yahei;color:#FFFFFF;">Score Board</center><br/>
-        <center id="steps" style="font:30px Microsoft Yahei,Arial;color:#FFFFFF">Sliding Matrix</center><br/>
-        <table class="mui-table mui-table--bordered">
+        <center id="title" style="font:bold 70px Arial,Microsoft Yahei;color:#FFFFFF;padding:15px 0 0 0;">Score Board</center><br/>
+        <center id="title" style="font:25px Microsoft Yahei,Arial;color:#FFFFFF">Sliding Matrix</center><br/>
+        <table class="mui-table mui-table--bordered" style="padding:0 50px 0 50px;">
             <thead>
               <tr>
-                <th>Column 1</th>
-                <th>Column 2</th>
-                <th>Column 2</th>
-                <th>Column 2</th>
-                <th>Column 2</th>
+                <th>Solution ID</th>
+                <th>User name</th>
+                <th>Submit time</th>
+                <th>Step amount</th>
+                <th>Solution</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Cell 1-1sdasdsadsadasdsadsa</td>
-                <td>Cell 1-2sadasdsadsadsad</td>
+                <td id="a1-1"></td>
+                <td id="a1-2"></td>
+                <td id="a1-3"></td>
+                <td id="a1-4"></td>
+                <td id="a1-5"></td>
               </tr>
               <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
+                <td id="a2-1"></td>
+                <td id="a2-2"></td>
+                <td id="a2-3"></td>
+                <td id="a2-4"></td>
+                <td id="a2-5"></td>
               </tr>
               <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
+                <td id="a3-1"></td>
+                <td id="a3-2"></td>
+                <td id="a3-3"></td>
+                <td id="a3-4"></td>
+                <td id="a3-5"></td>
               </tr>
               <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
+                <td id="a4-1"></td>
+                <td id="a4-2"></td>
+                <td id="a4-3"></td>
+                <td id="a4-4"></td>
+                <td id="a4-5"></td>
               </tr>
               <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
+                <td id="a5-1"></td>
+                <td id="a5-2"></td>
+                <td id="a5-3"></td>
+                <td id="a5-4"></td>
+                <td id="a5-5"></td>
               </tr>
               <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
+                <td id="a6-1"></td>
+                <td id="a6-2"></td>
+                <td id="a6-3"></td>
+                <td id="a6-4"></td>
+                <td id="a6-5"></td>
               </tr>
               <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
+                <td id="a7-1"></td>
+                <td id="a7-2"></td>
+                <td id="a7-3"></td>
+                <td id="a7-4"></td>
+                <td id="a7-5"></td>
               </tr>
               <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
+                <td id="a8-1"></td>
+                <td id="a8-2"></td>
+                <td id="a8-3"></td>
+                <td id="a8-4"></td>
+                <td id="a8-5"></td>
               </tr>
               <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
+                <td id="a9-1"></td>
+                <td id="a9-2"></td>
+                <td id="a9-3"></td>
+                <td id="a9-4"></td>
+                <td id="a9-5"></td>
               </tr>
               <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
-              </tr>
-              <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
-              </tr>
-              <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
-              </tr>
-              <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
-              </tr>
-              <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
-              </tr>
-              <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
-              </tr>
-              <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
-              </tr>
-              <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
-              </tr>
-              <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
-              </tr>
-              <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
-              </tr>
-              <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
-              </tr>
-              <tr>
-                <td>Cell 2-1adsadsadsa</td>
-                <td>Cell 2-2adsadsadasd</td>
+                <td id="a10-1"></td>
+                <td id="a10-2"></td>
+                <td id="a10-3"></td>
+                <td id="a10-4"></td>
+                <td id="a10-5"></td>
               </tr>
             </tbody>
         </table>
+
     </div>
 </body>
+<script>
+
+</script>
 </html>
         
