@@ -2,6 +2,8 @@
 
 **Authors: [eEhyQx](https://github.com/eEhyQx), [greatoyster](https://github.com/greatoyster),  [cykenjay](cykenjay@gmail.com).**
 
+Star this project on [here](https://github.com/eEhyQx/SlidingMatrix).
+
 - [x] Basic rules
 - [x] GUI
 - [x] Undo the previous step
